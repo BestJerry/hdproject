@@ -537,7 +537,23 @@
 					logical_models 	(list unit_reference_list
 					    (object UseCase "会员消费参数设置"
 						quid       	"5B3C3BB1008E"
-						documentation 	"设置前台账号是否只绑定的IP登录，当需要绑定IP登录的情况下，登录时需要验证登录前台的IP地址同设置的IP地址是否一致，当不一致时，不允许登录；")
+						documentation 	"设置前台账号是否只绑定的IP登录，当需要绑定IP登录的情况下，登录时需要验证登录前台的IP地址同设置的IP地址是否一致，当不一致时，不允许登录；"
+						visible_modules 	(list dependency_list
+						    (object Dependency_Relationship
+							quid       	"5B3C754A02F1"
+							stereotype 	"include"
+							supplier   	"Use Case View::Use-Case Model::Use Cases::商家配置管理::会员消费参数设置::卡号消费设置"
+							quidu      	"5B3C40E70224")
+						    (object Dependency_Relationship
+							quid       	"5B3C754D01F9"
+							stereotype 	"include"
+							supplier   	"Use Case View::Use-Case Model::Use Cases::商家配置管理::会员消费参数设置::消费小票打印内容设置"
+							quidu      	"5B3C40EA015C")
+						    (object Dependency_Relationship
+							quid       	"5B3C755000C2"
+							stereotype 	"include"
+							supplier   	"Use Case View::Use-Case Model::Use Cases::商家配置管理::会员消费参数设置::短消息验证设置"
+							quidu      	"5B3C40E30221")))
 					    (object UseCase "短消息验证设置"
 						quid       	"5B3C40E30221"
 						visible_modules 	(list dependency_list
@@ -794,7 +810,7 @@
 								supplier   	@22
 								vertices   	(list Points
 								    (1525, 709)
-								    (1698, 714))
+								    (1697, 714))
 								line_style 	0)))
 						    (object DependencyView "" @28
 							font       	(object Font
@@ -808,7 +824,7 @@
 							    default_color 	TRUE)
 							stereotype 	(object SegLabel @29
 							    Parent_View 	@28
-							    location   	(2245, 744)
+							    location   	(2125, 576)
 							    font       	(object Font
 								size       	9
 								face       	"Arial"
@@ -823,17 +839,17 @@
 							    nlines     	1
 							    max_width  	450
 							    justify    	0
-							    label      	"<<extend>>"
-							    pctDist    	0.382072
-							    height     	9
+							    label      	"<<include>>"
+							    pctDist    	0.464360
+							    height     	11
 							    orientation 	0)
 							line_color 	3342489
-							quidu      	"5B3C418200C0"
-							client     	@19
-							supplier   	@22
+							quidu      	"5B3C755000C2"
+							client     	@22
+							supplier   	@18
 							vertices   	(list Points
-							    (2449, 743)
-							    (1916, 722))
+							    (1916, 673)
+							    (2375, 486))
 							line_style 	0)
 						    (object DependencyView "" @30
 							font       	(object Font
@@ -847,7 +863,7 @@
 							    default_color 	TRUE)
 							stereotype 	(object SegLabel @31
 							    Parent_View 	@30
-							    location   	(2224, 904)
+							    location   	(2217, 706)
 							    font       	(object Font
 								size       	9
 								face       	"Arial"
@@ -862,17 +878,17 @@
 							    nlines     	1
 							    max_width  	450
 							    justify    	0
-							    label      	"<<extend>>"
-							    pctDist    	0.462032
-							    height     	29
+							    label      	"<<include>>"
+							    pctDist    	0.562672
+							    height     	28
 							    orientation 	0)
 							line_color 	3342489
-							quidu      	"5B3C418402AE"
-							client     	@20
-							supplier   	@22
+							quidu      	"5B3C754A02F1"
+							client     	@22
+							supplier   	@19
 							vertices   	(list Points
-							    (2465, 964)
-							    (2128, 837))
+							    (1916, 722)
+							    (2449, 743))
 							line_style 	0)
 						    (object DependencyView "" @32
 							font       	(object Font
@@ -886,7 +902,7 @@
 							    default_color 	TRUE)
 							stereotype 	(object SegLabel @33
 							    Parent_View 	@32
-							    location   	(2204, 598)
+							    location   	(2252, 867)
 							    font       	(object Font
 								size       	9
 								face       	"Arial"
@@ -901,17 +917,17 @@
 							    nlines     	1
 							    max_width  	450
 							    justify    	0
-							    label      	"<<extend>>"
-							    pctDist    	0.406568
-							    height     	39
+							    label      	"<<include>>"
+							    pctDist    	0.564424
+							    height     	16
 							    orientation 	0)
 							line_color 	3342489
-							quidu      	"5B3C417F01D7"
-							client     	@18
-							supplier   	@22
+							quidu      	"5B3C754D01F9"
+							client     	@22
+							supplier   	@20
 							vertices   	(list Points
-							    (2191, 560)
-							    (1916, 673))
+							    (1963, 776)
+							    (2465, 964))
 							line_style 	0)))))
 				    (object Class_Category "会员充值卡操作人类型设置"
 					quid       	"5B3C3CC303CB"
@@ -1439,7 +1455,7 @@
 							supplier   	@53
 							vertices   	(list Points
 							    (889, 492)
-							    (777, 563))
+							    (777, 566))
 							line_style 	0)
 						    (object RoleView "$UNNAMED$7" @57
 							Parent_View 	@54
@@ -1482,7 +1498,7 @@
 							supplier   	@51
 							vertices   	(list Points
 							    (889, 492)
-							    (1002, 417))
+							    (1002, 418))
 							line_style 	0)))
 					    (object AssociationViewNew "$UNNAMED$3" @59
 						location   	(957, 641)
@@ -1574,7 +1590,7 @@
 							supplier   	@52
 							vertices   	(list Points
 							    (957, 641)
-							    (1136, 668))
+							    (1138, 669))
 							line_style 	0)))
 					    (object UseCaseView "Use Case View::Use-Case Model::Use Cases::商家配置管理::前台绑定ip登陆设置::前台绑定ip登陆设置" @64
 						location   	(1040, 1216)
@@ -1646,7 +1662,7 @@
 							supplier   	@53
 							vertices   	(list Points
 							    (904, 960)
-							    (806, 775))
+							    (800, 763))
 							line_style 	0)
 						    (object RoleView "$UNNAMED$10" @68
 							Parent_View 	@65
@@ -1689,7 +1705,7 @@
 							supplier   	@64
 							vertices   	(list Points
 							    (904, 960)
-							    (1007, 1158))
+							    (1008, 1158))
 							line_style 	0)))
 					    (object UseCaseView "Use Case View::Use-Case Model::Use Cases::商家配置管理::前台绑定ip登陆设置::验证ip地址" @70
 						location   	(1776, 1280)
@@ -1776,46 +1792,7 @@
 						line_color 	3342489
 						fill_color 	13434879
 						quidu      	"5B3C40EA015C")
-					    (object DependencyView "" @74
-						font       	(object Font
-						    size       	9
-						    face       	"Arial"
-						    bold       	FALSE
-						    italics    	FALSE
-						    underline  	FALSE
-						    strike     	FALSE
-						    color      	0
-						    default_color 	TRUE)
-						stereotype 	(object SegLabel @75
-						    Parent_View 	@74
-						    location   	(1815, 833)
-						    font       	(object Font
-							size       	9
-							face       	"Arial"
-							bold       	FALSE
-							italics    	FALSE
-							underline  	FALSE
-							strike     	FALSE
-							color      	0
-							default_color 	TRUE)
-						    anchor     	10
-						    anchor_loc 	1
-						    nlines     	1
-						    max_width  	450
-						    justify    	0
-						    label      	"<<extend>>"
-						    pctDist    	0.500000
-						    height     	108
-						    orientation 	0)
-						line_color 	3342489
-						quidu      	"5B3C418402AE"
-						client     	@73
-						supplier   	@52
-						vertices   	(list Points
-						    (2288, 757)
-						    (1356, 692))
-						line_style 	0)
-					    (object UseCaseView "Use Case View::Use-Case Model::Use Cases::商家配置管理::会员消费参数设置::卡号消费设置" @76
+					    (object UseCaseView "Use Case View::Use-Case Model::Use Cases::商家配置管理::会员消费参数设置::卡号消费设置" @74
 						location   	(2320, 432)
 						font       	(object Font
 						    size       	9
@@ -1827,7 +1804,7 @@
 						    color      	0
 						    default_color 	TRUE)
 						label      	(object ItemLabel
-						    Parent_View 	@76
+						    Parent_View 	@74
 						    location   	(2320, 570)
 						    anchor_loc 	1
 						    nlines     	2
@@ -1838,7 +1815,8 @@
 						line_color 	3342489
 						fill_color 	13434879
 						quidu      	"5B3C40E70224")
-					    (object DependencyView "" @77
+					    (object UseCaseView "Use Case View::Use-Case Model::Use Cases::商家配置管理::会员消费参数设置::短消息验证设置" @75
+						location   	(2240, 1088)
 						font       	(object Font
 						    size       	9
 						    face       	"Arial"
@@ -1848,9 +1826,63 @@
 						    strike     	FALSE
 						    color      	0
 						    default_color 	TRUE)
-						stereotype 	(object SegLabel @78
-						    Parent_View 	@77
-						    location   	(1808, 662)
+						label      	(object ItemLabel
+						    Parent_View 	@75
+						    location   	(2240, 1226)
+						    anchor_loc 	1
+						    nlines     	2
+						    max_width  	630
+						    justify    	0
+						    label      	"短消息验证设置")
+						icon_style 	"Icon"
+						line_color 	3342489
+						fill_color 	13434879
+						quidu      	"5B3C40E30221")
+					    (object NoteView @76
+						location   	(1344, 1520)
+						font       	(object Font
+						    size       	9
+						    face       	"Arial"
+						    bold       	FALSE
+						    italics    	FALSE
+						    underline  	FALSE
+						    strike     	FALSE
+						    color      	0
+						    default_color 	TRUE)
+						label      	(object ItemLabel
+						    Parent_View 	@76
+						    location   	(1206, 1460)
+						    fill_color 	13434879
+						    nlines     	2
+						    max_width  	240
+						    justify    	1
+						    label      	"当需要绑定IP登录的情况下")
+						line_color 	3342489
+						fill_color 	13434879
+						width      	300
+						height     	132)
+					    (object AttachView "" @77
+						stereotype 	TRUE
+						line_color 	3342489
+						client     	@76
+						supplier   	@71
+						vertices   	(list Points
+						    (1358, 1453)
+						    (1406, 1243))
+						line_style 	0)
+					    (object DependencyView "" @78
+						font       	(object Font
+						    size       	9
+						    face       	"Arial"
+						    bold       	FALSE
+						    italics    	FALSE
+						    underline  	FALSE
+						    strike     	FALSE
+						    color      	0
+						    default_color 	TRUE)
+						stereotype 	(object SegLabel @79
+						    Parent_View 	@78
+						    location   	(1759, 452)
 						    font       	(object Font
 							size       	9
 							face       	"Arial"
@@ -1865,41 +1897,18 @@
 						    nlines     	1
 						    max_width  	450
 						    justify    	0
-						    label      	"<<extend>>"
+						    label      	"<<include>>"
 						    pctDist    	0.500000
 						    height     	108
 						    orientation 	0)
 						line_color 	3342489
-						quidu      	"5B3C418200C0"
-						client     	@76
-						supplier   	@52
+						quidu      	"5B3C754A02F1"
+						client     	@52
+						supplier   	@74
 						vertices   	(list Points
-						    (1999, 505)
-						    (1356, 658))
+						    (1356, 658)
+						    (2210, 455))
 						line_style 	0)
-					    (object UseCaseView "Use Case View::Use-Case Model::Use Cases::商家配置管理::会员消费参数设置::短消息验证设置" @79
-						location   	(2240, 1088)
-						font       	(object Font
-						    size       	9
-						    face       	"Arial"
-						    bold       	FALSE
-						    italics    	FALSE
-						    underline  	FALSE
-						    strike     	FALSE
-						    color      	0
-						    default_color 	TRUE)
-						label      	(object ItemLabel
-						    Parent_View 	@79
-						    location   	(2240, 1226)
-						    anchor_loc 	1
-						    nlines     	2
-						    max_width  	630
-						    justify    	0
-						    label      	"短消息验证设置")
-						icon_style 	"Icon"
-						line_color 	3342489
-						fill_color 	13434879
-						quidu      	"5B3C40E30221")
 					    (object DependencyView "" @80
 						font       	(object Font
 						    size       	9
@@ -1912,7 +1921,7 @@
 						    default_color 	TRUE)
 						stereotype 	(object SegLabel @81
 						    Parent_View 	@80
-						    location   	(1726, 994)
+						    location   	(1830, 617)
 						    font       	(object Font
 							size       	9
 							face       	"Arial"
@@ -1927,20 +1936,19 @@
 						    nlines     	1
 						    max_width  	450
 						    justify    	0
-						    label      	"<<extend>>"
+						    label      	"<<include>>"
 						    pctDist    	0.500000
 						    height     	108
 						    orientation 	0)
 						line_color 	3342489
-						quidu      	"5B3C417F01D7"
-						client     	@79
-						supplier   	@52
+						quidu      	"5B3C754D01F9"
+						client     	@52
+						supplier   	@73
 						vertices   	(list Points
-						    (2128, 1041)
-						    (1568, 815))
+						    (1356, 692)
+						    (2288, 757))
 						line_style 	0)
-					    (object NoteView @82
-						location   	(1344, 1520)
+					    (object DependencyView "" @82
 						font       	(object Font
 						    size       	9
 						    face       	"Arial"
@@ -1950,26 +1958,34 @@
 						    strike     	FALSE
 						    color      	0
 						    default_color 	TRUE)
-						label      	(object ItemLabel
+						stereotype 	(object SegLabel @83
 						    Parent_View 	@82
-						    location   	(1206, 1460)
-						    fill_color 	13434879
-						    nlines     	2
-						    max_width  	240
-						    justify    	1
-						    label      	"当需要绑定IP登录的情况下")
+						    location   	(1806, 796)
+						    font       	(object Font
+							size       	9
+							face       	"Arial"
+							bold       	FALSE
+							italics    	FALSE
+							underline  	FALSE
+							strike     	FALSE
+							color      	0
+							default_color 	TRUE)
+						    anchor     	10
+						    anchor_loc 	1
+						    nlines     	1
+						    max_width  	450
+						    justify    	0
+						    label      	"<<include>>"
+						    pctDist    	0.500000
+						    height     	108
+						    orientation 	0)
 						line_color 	3342489
-						fill_color 	13434879
-						width      	300
-						height     	132)
-					    (object AttachView "" @83
-						stereotype 	TRUE
-						line_color 	3342489
-						client     	@82
-						supplier   	@71
+						quidu      	"5B3C755000C2"
+						client     	@52
+						supplier   	@75
 						vertices   	(list Points
-						    (1358, 1453)
-						    (1406, 1243))
+						    (1403, 748)
+						    (2128, 1041))
 						line_style 	0)))))
 			    (object Class_Category "商家登录管理"
 				quid       	"5B39C65701B9"
