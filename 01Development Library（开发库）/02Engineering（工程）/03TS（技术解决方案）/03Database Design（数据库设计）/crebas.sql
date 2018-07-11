@@ -1,142 +1,131 @@
-/*==============================================================*/
-/* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2018/7/11 15:12:50                           */
-/*==============================================================*/
+/*
+Navicat MySQL Data Transfer
 
+Source Server         : MySQL56 at localhost
+Source Server Version : 50634
+Source Host           : localhost:3306
+Source Database       : hdproject
 
-drop table if exists account;
+Target Server Type    : MYSQL
+Target Server Version : 50634
+File Encoding         : 65001
 
-drop table if exists business;
+Date: 2018-07-11 20:30:40
+*/
 
-drop table if exists contacts;
+SET FOREIGN_KEY_CHECKS=0;
 
-drop table if exists log;
+-- ----------------------------
+-- Table structure for account
+-- ----------------------------
+DROP TABLE IF EXISTS `account`;
+CREATE TABLE `account` (
+  `acc_id` decimal(10,0) NOT NULL,
+  `bus_id` decimal(10,0) NOT NULL,
+  `account_type` varchar(50) NOT NULL COMMENT 'ï¿½ï¿½ï¿½İ·ï¿½Î§ï¿½ï¿½1~4\r\n            1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô±\r\n            2ï¿½ï¿½Ç°Ì¨\r\n            3ï¿½ï¿½ï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½\r\n            4ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½',
+  `acc_name` varchar(50) NOT NULL,
+  `acc_psd` varchar(50) NOT NULL,
+  `isStart` tinyint(1) NOT NULL,
+  `last_login` datetime DEFAULT NULL,
+  PRIMARY KEY (`acc_id`),
+  KEY `FK_Relationship_10` (`bus_id`),
+  KEY `FK_Relationship_8` (`account_type`),
+  CONSTRAINT `FK_Relationship_10` FOREIGN KEY (`bus_id`) REFERENCES `business` (`bus_id`),
+  CONSTRAINT `FK_Relationship_8` FOREIGN KEY (`account_type`) REFERENCES `power` (`account_type`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-drop table if exists operation;
+-- ----------------------------
+-- Table structure for business
+-- ----------------------------
+DROP TABLE IF EXISTS `business`;
+CREATE TABLE `business` (
+  `bus_id` decimal(10,0) NOT NULL,
+  `con_id` decimal(10,0) NOT NULL,
+  `bus_type` tinyint(50) NOT NULL,
+  `bus_name` varchar(50) NOT NULL,
+  `bus_add` varchar(50) NOT NULL,
+  `bus_phone` varchar(50) NOT NULL,
+  `bus_postcode` decimal(10,0) DEFAULT NULL,
+  `bus_star` int(11) DEFAULT NULL COMMENT 'ï¿½ï¿½ï¿½İ·ï¿½Î§ï¿½ï¿½0~5  ï¿½ï¿½Ê¾0ï¿½ï¿½5ï¿½Ç¼ï¿½',
+  `con_intergral` decimal(10,0) NOT NULL,
+  `discount` decimal(10,0) NOT NULL,
+  PRIMARY KEY (`bus_id`),
+  KEY `FK_Relationship_1` (`con_id`),
+  KEY `FK_business_businesstype` (`bus_type`),
+  CONSTRAINT `FK_Relationship_1` FOREIGN KEY (`con_id`) REFERENCES `contacts` (`con_id`),
+  CONSTRAINT `FK_business_businesstype` FOREIGN KEY (`bus_type`) REFERENCES `businesstype` (`type_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-drop table if exists power;
+-- ----------------------------
+-- Table structure for businesstype
+-- ----------------------------
+DROP TABLE IF EXISTS `businesstype`;
+CREATE TABLE `businesstype` (
+  `type_id` tinyint(255) NOT NULL COMMENT 'ä¼ä¸šç±»åˆ«ç¼–å·',
+  `type_name` varchar(255) NOT NULL COMMENT 'ç±»åˆ«åç§°',
+  PRIMARY KEY (`type_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*==============================================================*/
-/* Table: account                                               */
-/*==============================================================*/
-create table account
-(
-   acc_id               numeric(10,0) not null,
-   bus_id               numeric(10,0),
-   account_type         varchar(50) not null comment 'Êı¾İ·¶Î§£º1~4
-            1£º¹ÜÀíÔ±
-            2£ºÇ°Ì¨
-            3£º¿Í»§¾­Àí
-            4£º¾­Àí',
-   acc_name             varchar(50) not null,
-   acc_psd              varchar(50) not null,
-   isStart              bool not null,
-   acc_time             datetime,
-   primary key (acc_id)
-);
+-- ----------------------------
+-- Table structure for contacts
+-- ----------------------------
+DROP TABLE IF EXISTS `contacts`;
+CREATE TABLE `contacts` (
+  `con_id` decimal(10,0) NOT NULL,
+  `con_title` enum('0','1') NOT NULL DEFAULT '0' COMMENT 'ç§°è°“ï¼š0.å…ˆç”Ÿ  1.å¥³å£«',
+  `con_name` varchar(50) NOT NULL,
+  `con_position` varchar(50) NOT NULL,
+  `con_tel` varchar(50) NOT NULL,
+  `con_mobile` decimal(20,0) DEFAULT NULL,
+  `con_fax` decimal(20,0) DEFAULT NULL,
+  `con_email` varchar(30) NOT NULL,
+  PRIMARY KEY (`con_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*==============================================================*/
-/* Table: business                                              */
-/*==============================================================*/
-create table business
-(
-   bus_id               numeric(10,0) not null,
-   con_id               numeric(10,0) not null,
-   bus_type             varchar(50),
-   bus_name             varchar(50),
-   bus_add              varchar(50),
-   bus_phone            varchar(50),
-   bus_postcode         numeric(10,0),
-   bus_star             int comment 'Êı¾İ·¶Î§£º0~5  ±íÊ¾0µ½5ĞÇ¼¶',
-   con_intergral        decimal,
-   discount             decimal,
-   primary key (bus_id)
-);
+-- ----------------------------
+-- Table structure for log
+-- ----------------------------
+DROP TABLE IF EXISTS `log`;
+CREATE TABLE `log` (
+  `log_id` decimal(10,0) NOT NULL,
+  `acc_id` decimal(10,0) DEFAULT NULL,
+  `log_type` tinyint(1) DEFAULT NULL COMMENT 'trueÎªï¿½ï¿½Â½ï¿½ï¿½falseÎªï¿½Ë³ï¿½',
+  `log_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`log_id`),
+  KEY `FK_Relationship_12` (`acc_id`),
+  CONSTRAINT `FK_Relationship_12` FOREIGN KEY (`acc_id`) REFERENCES `account` (`acc_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*==============================================================*/
-/* Table: contacts                                              */
-/*==============================================================*/
-create table contacts
-(
-   con_id               numeric(10,0) not null,
-   con_title            varchar(50),
-   con_name             varchar(50),
-   con_position         varchar(50),
-   con_tel              varchar(50),
-   con_mobile           numeric(20,0),
-   con_fax              numeric(20,0),
-   con_email            varchar(30),
-   primary key (con_id)
-);
+-- ----------------------------
+-- Table structure for operation
+-- ----------------------------
+DROP TABLE IF EXISTS `operation`;
+CREATE TABLE `operation` (
+  `opt_id` decimal(10,0) NOT NULL,
+  `acc_id` decimal(10,0) DEFAULT NULL,
+  `opt_date` datetime NOT NULL,
+  `opt_url` varchar(50) DEFAULT NULL,
+  `opt_fun` varchar(50) DEFAULT NULL,
+  `opt_exp` varchar(50) DEFAULT NULL,
+  `remarks` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`opt_id`),
+  KEY `FK_Relationship_5` (`acc_id`),
+  CONSTRAINT `FK_Relationship_5` FOREIGN KEY (`acc_id`) REFERENCES `account` (`acc_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-/*==============================================================*/
-/* Table: log                                                   */
-/*==============================================================*/
-create table log
-(
-   log_id               numeric(10,0) not null,
-   acc_id               numeric(10,0),
-   log_type             bool comment 'trueÎªµÇÂ½£¬falseÎªÍË³ö',
-   log_time             datetime,
-   primary key (log_id)
-);
-
-/*==============================================================*/
-/* Table: operation                                             */
-/*==============================================================*/
-create table operation
-(
-   opt_id               numeric(10,0) not null,
-   acc_id               numeric(10,0),
-   opt_date             datetime not null,
-   opt_url              varchar(50),
-   opt_fun              varchar(50),
-   opt_exp              varchar(50),
-   remarks              varchar(50),
-   primary key (opt_id)
-);
-
-/*==============================================================*/
-/* Table: power                                                 */
-/*==============================================================*/
-create table power
-(
-   account_type         varchar(50) not null comment 'Êı¾İ·¶Î§£º1~4
-            1£º¹ÜÀíÔ±
-            2£ºÇ°Ì¨
-            3£º¿Í»§¾­Àí
-            4£º¾­Àí',
-   record               bool comment 'true:Ö»¿ÉĞŞ¸Ä30·ÖÖÓÄÚ¼ÇÂ¼£¬ÇÒÖ»ÄÜĞŞ¸Ä×Ô¼ºÕË»§Ìí¼ÓµÄ½Ó´ı¼ÇÂ¼
-            false:¿ÉÒÔĞŞ¸Ä±¾µê48Ğ¡Ê±ÄÚµÄ½Ó´ı¼ÇÂ¼',
-   information          bool comment 'true:Ö»¿ÉÒÔĞŞ¸Ä30·ÖÖÓÄÚ¼ÇÂ¼£¬ÇÒÖ»ÄÜĞŞ¸Ä×Ô¼ºÕË»§Ìí¼ÓµÄ»áÔ±×ÊÁÏ
-            false:ÈÎºÎÊ±¼ä¾ù¿ÉĞŞ¸Ä±¾µêµÄ»áÔ±ĞÅÏ¢',
-   business             bool comment 'true:¿ÉÒÔ
-            false:²»¿ÉÒÔ',
-   report               bool comment 'true:¿ÉÒÔ
-            false:²»¿ÉÒÔ',
-   account              bool comment 'true:¿ÉÒÔ
-            false:²»¿ÉÒÔ',
-   cardtype             bool comment 'true:¿ÉÒÔ
-            false:²»¿ÉÒÔ',
-   recharge             bool comment 'true:¿ÉÒÔ
-            false:²»¿ÉÒÔ',
-   manager              bool comment 'true:¿ÉÒÔ
-            false:²»¿ÉÒÔ',
-   primary key (account_type)
-);
-
-alter table account add constraint FK_Relationship_10 foreign key (bus_id)
-      references business (bus_id) on delete restrict on update restrict;
-
-alter table account add constraint FK_Relationship_8 foreign key (account_type)
-      references power (account_type) on delete restrict on update restrict;
-
-alter table business add constraint FK_Relationship_1 foreign key (con_id)
-      references contacts (con_id) on delete restrict on update restrict;
-
-alter table log add constraint FK_Relationship_12 foreign key (acc_id)
-      references account (acc_id) on delete restrict on update restrict;
-
-alter table operation add constraint FK_Relationship_5 foreign key (acc_id)
-      references account (acc_id) on delete restrict on update restrict;
-
+-- ----------------------------
+-- Table structure for power
+-- ----------------------------
+DROP TABLE IF EXISTS `power`;
+CREATE TABLE `power` (
+  `account_type` varchar(50) NOT NULL COMMENT 'ï¿½ï¿½ï¿½İ·ï¿½Î§ï¿½ï¿½1~4\r\n            1ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô±\r\n            2ï¿½ï¿½Ç°Ì¨\r\n            3ï¿½ï¿½ï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½\r\n            4ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½',
+  `record` tinyint(1) DEFAULT NULL COMMENT 'true:Ö»ï¿½ï¿½ï¿½Ş¸ï¿½30ï¿½ï¿½ï¿½ï¿½ï¿½Ú¼ï¿½Â¼ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½ï¿½Ş¸ï¿½ï¿½Ô¼ï¿½ï¿½Ë»ï¿½ï¿½ï¿½ÓµÄ½Ó´ï¿½ï¿½ï¿½Â¼\r\n            false:ï¿½ï¿½ï¿½ï¿½ï¿½Ş¸Ä±ï¿½ï¿½ï¿½48Ğ¡Ê±ï¿½ÚµÄ½Ó´ï¿½ï¿½ï¿½Â¼',
+  `information` tinyint(1) DEFAULT NULL COMMENT 'true:Ö»ï¿½ï¿½ï¿½ï¿½ï¿½Ş¸ï¿½30ï¿½ï¿½ï¿½ï¿½ï¿½Ú¼ï¿½Â¼ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½ï¿½Ş¸ï¿½ï¿½Ô¼ï¿½ï¿½Ë»ï¿½ï¿½ï¿½ÓµÄ»ï¿½Ô±ï¿½ï¿½ï¿½ï¿½\r\n            false:ï¿½Îºï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ş¸Ä±ï¿½ï¿½ï¿½Ä»ï¿½Ô±ï¿½ï¿½Ï¢',
+  `business` tinyint(1) DEFAULT NULL COMMENT 'true:ï¿½ï¿½ï¿½ï¿½\r\n            false:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½',
+  `report` tinyint(1) DEFAULT NULL COMMENT 'true:ï¿½ï¿½ï¿½ï¿½\r\n            false:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½',
+  `account` tinyint(1) DEFAULT NULL COMMENT 'true:ï¿½ï¿½ï¿½ï¿½\r\n            false:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½',
+  `cardtype` tinyint(1) DEFAULT NULL COMMENT 'true:ï¿½ï¿½ï¿½ï¿½\r\n            false:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½',
+  `recharge` tinyint(1) DEFAULT NULL COMMENT 'true:ï¿½ï¿½ï¿½ï¿½\r\n            false:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½',
+  `manager` tinyint(1) DEFAULT NULL COMMENT 'true:ï¿½ï¿½ï¿½ï¿½\r\n            false:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½',
+  PRIMARY KEY (`account_type`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
