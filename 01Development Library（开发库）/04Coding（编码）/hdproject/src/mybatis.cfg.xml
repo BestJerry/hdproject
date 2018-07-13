@@ -15,7 +15,7 @@
 	<!-- 为JAVA Bean起类别名 -->
    <typeAliases >
         <!-- 自动扫描 包下的所有Bean -->
-        <package name="com.cy.mybatis.beans"/>
+        <package name="com.hd.beans"/>
    </typeAliases>
 	
 	<!-- 配置Mybatis运行环境 -->
@@ -36,7 +36,7 @@
 	
 	 <mappers>
         <!-- 自动扫描包内的Mapper接口与配置文件 -->
-        <package name="com/cy/mybatis/mapper"/>
+        <package name="com/hd/mapper"/>
     </mappers>
 	
 	
