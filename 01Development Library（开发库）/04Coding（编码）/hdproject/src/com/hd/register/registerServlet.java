@@ -1,6 +1,7 @@
 package com.hd.register;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Random;
@@ -12,15 +13,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.ibatis.session.SqlSession;
+import org.json.JSONObject;
 
-import com.hd.accountBusinessContactsmapper.AccountMapper;
-import com.hd.accountBusinessContactsmapper.BusinessMapper;
-import com.hd.accountBusinessContactsmapper.ContactsMapper;
 import com.hd.beans.Account;
 import com.hd.beans.Business;
 import com.hd.beans.Contacts;
-
+import com.hd.mapper.AccountMapper;
+import com.hd.mapper.BusinessMapper;
+import com.hd.mapper.ContactsMapper;
 import com.hd.tools.DBTools;
+import com.hd.tools.Response;
 
 
 @WebServlet(urlPatterns={"/register"})
@@ -32,7 +34,7 @@ public class registerServlet extends HttpServlet {
 	}
      
     protected void doPost(HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException{
-          	request.setCharacterEncoding("utf-8");
+          	//request.setCharacterEncoding("utf-8"); 不用request和response都不用转换编码
           	String bus_type=request.getParameter("bus_type");
           	String bus_name=request.getParameter("bus_name");
           	String bus_add=request.getParameter("bus_add");
@@ -50,23 +52,49 @@ public class registerServlet extends HttpServlet {
           	String con_email=request.getParameter("con_email");
           	String verificationCode=request.getParameter("verificationCode");
           	
+          	Response res = new Response(null,"0","");//初始化响应对象
+          	PrintWriter out = response.getWriter();//初始化响应的输出对象
+          	if(verificationCode == null || verificationCode.equals("") || 
+          			!verificationCode.equals(request.getSession().getAttribute("verificationCode"))) {
+          			//检验验证码是否正确
+          			res.setStatus("1");res.setMessage("验证码错误");
+          			JSONObject resJson = new JSONObject(res);//将对象转换成json各式
+          			out.print(resJson);//输出json字符串
+          			return;//退出doPost方法
+          	}
+          	
           	int con_id=insertContacts(con_title,con_name,con_position,con_tel,con_mobile,con_fax,con_email);
-          	insertBusiness(con_id, bus_type, bus_name, bus_add, bus_phone, bus_postcode, bus_star, con_intergral, discount);
+          	int bus_id = insertBusiness(con_id, bus_type, bus_name, bus_add, bus_phone, bus_postcode, bus_star, con_intergral, discount);
             
             //随机分配初始账户
             String acc_name=getAccName();
           	while(isSame(acc_name)==true){
           		acc_name=getAccName();
           	}
-          	
           	//初始密码固定为123456
           	String acc_psd="123456";
           	
-          	request.getSession().setAttribute(acc_name, acc_name);
-          	request.getSession().setAttribute(acc_psd, acc_psd);
-          	
-          	//request.getRequestDispatcher("../index.jsp").forward(request, response);
-    
+          	//插入新账号
+          	Account account = new Account(0,1,bus_id,acc_name,acc_psd,true,null);
+          	SqlSession session=DBTools.getSession();
+    		AccountMapper mapper=session.getMapper(AccountMapper.class);
+    		try {
+				mapper.insertAccount(account);
+				session.commit();
+			} catch (Exception e) {
+				e.printStackTrace();
+				session.rollback();
+				res.setStatus("3");res.setMessage("数据库操作出错！");
+      			JSONObject resJson = new JSONObject(res);
+      			out.print(resJson);
+      			return;
+			} finally {
+				session.close();//session使用完后关闭
+			}
+    		
+  			JSONObject resJson = new JSONObject(account);//将对象转换成json各式
+  			out.print(resJson);//输出json字符串
+  			return;//退出doPost方法
     }
     
     /**
@@ -104,6 +132,8 @@ public class registerServlet extends HttpServlet {
 			e.printStackTrace();
 			session.rollback();
 			// TODO: handle exception
+		} finally {
+			session.close();
 		}
 		boolean isSame=false;
 		for(Account account:accounts){
@@ -124,14 +154,16 @@ public class registerServlet extends HttpServlet {
 		ContactsMapper mapper=session.getMapper(ContactsMapper.class);
 		Contacts contacts=new Contacts(con_title, con_name, con_position, con_tel, con_mobile, con_fax, con_email);
 		try{
-			mapper.insertContacts(contacts);
-			con_id=contacts.getCon_id();
+			con_id=mapper.insertContacts(contacts);
+			//con_id=contacts.getCon_id();
 			System.out.println(contacts.toString());
 			session.commit();
 		}catch (Exception e) {
 		    e.printStackTrace();
 		    System.out.println("contacts fail");
 		    session.rollback();
+		} finally {
+			session.close();
 		}
 		return con_id;
 	}
@@ -140,18 +172,22 @@ public class registerServlet extends HttpServlet {
     /**
 	 * 新增商户
 	 */
-	public static void insertBusiness(int con_id,String bus_type,String bus_name,String bus_add,String bus_phone,String bus_postcode,int bus_star,double con_intergral,double discount){
+	public static int insertBusiness(int con_id,String bus_type,String bus_name,String bus_add,String bus_phone,String bus_postcode,int bus_star,double con_intergral,double discount){
 		SqlSession session=DBTools.getSession();
 		BusinessMapper mapper=session.getMapper(BusinessMapper.class);
 		Business business=new Business(con_id, bus_type, bus_name, bus_add, bus_phone, bus_postcode, bus_star, con_intergral, discount);
+		int bus_id = 0;//要获取的自增主键
 		try{
-			mapper.insertBusiness(business);
+			bus_id = mapper.insertBusiness(business);
 			System.out.println(business.toString());
 			session.commit();
 		}catch (Exception e) {
 		    e.printStackTrace();
 		    System.out.println("business fail");
 		    session.rollback();
+		} finally {
+			session.close();
 		}
+		return bus_id;
 	}
 }
