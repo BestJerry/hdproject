@@ -140,3 +140,10 @@ alter table log add constraint FK_Relationship_12 foreign key (acc_id)
 alter table operation add constraint FK_Relationship_5 foreign key (acc_id)
       references account (acc_id) on delete restrict on update restrict;
 
+-- ----------------------------
+-- Records of power
+-- ----------------------------
+INSERT INTO `power` VALUES ('1', '1', '1', '1', '1', '1', '1', '1', '1');
+INSERT INTO `power` VALUES ('2', '1', '1', '0', '0', '0', '0', '0', '0');
+INSERT INTO `power` VALUES ('3', '1', '1', '0', '0', '0', '0', '0', '0');
+INSERT INTO `power` VALUES ('4', '1', '1', '1', '1', '0', '0', '1', '0');
