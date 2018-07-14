@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     18/7/12 14:51:27                             */
+/* Created on:     18/7/13 23:33:15                             */
 /*==============================================================*/
 
 
@@ -21,7 +21,7 @@ drop table if exists power;
 /*==============================================================*/
 create table account
 (
-   acc_id               int not null,
+   acc_id               int not null auto_increment,
    account_type         int not null comment '数据范围：1~4
             1：管理员
             2：前台
@@ -40,7 +40,7 @@ create table account
 /*==============================================================*/
 create table business
 (
-   bus_id               int not null,
+   bus_id               int not null auto_increment,
    con_id               int not null,
    bus_type             varchar(50) not null,
    bus_name             varchar(50) not null,
@@ -58,7 +58,7 @@ create table business
 /*==============================================================*/
 create table contacts
 (
-   con_id               int not null,
+   con_id               int not null auto_increment,
    con_title            enum('先生','女士') not null,
    con_name             varchar(50) not null,
    con_position         varchar(50) not null,
@@ -74,7 +74,7 @@ create table contacts
 /*==============================================================*/
 create table log
 (
-   log_id               int not null,
+   log_id               int not null auto_increment,
    acc_id               int not null,
    log_type             bool not null comment 'true为登陆，false为退出',
    log_time             datetime not null,
@@ -86,7 +86,7 @@ create table log
 /*==============================================================*/
 create table operation
 (
-   opt_id               int not null,
+   opt_id               int not null auto_increment,
    acc_id               int not null,
    opt_date             datetime not null,
    opt_url              varchar(50) not null,
