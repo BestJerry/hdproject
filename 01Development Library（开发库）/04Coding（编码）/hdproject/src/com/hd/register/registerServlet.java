@@ -93,7 +93,8 @@ public class registerServlet extends HttpServlet {
 				session.close();//session使用完后关闭
 			}
     		
-  			JSONObject resJson = new JSONObject(account);//将对象转换成json各式
+    		res.setData(account);
+  			JSONObject resJson = new JSONObject(res);//将对象转换成json各式
   			out.print(resJson);//输出json字符串
   			return;//退出doPost方法
     }
