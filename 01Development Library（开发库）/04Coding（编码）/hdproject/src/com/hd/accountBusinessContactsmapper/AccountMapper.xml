@@ -24,7 +24,7 @@
 </insert>
 
 <update id="updateAccount">
-   update account set acc_id=#{acc_id},account_type=#{account_type},bus_id=#{bus_id},acc_name=#{acc_name},acc_psd=#{acc_psd},isStart=#{isStart},acc_time=#{acc_time} where acc_id=#{acc_id}
+   update account set account_type=#{arg0.account_type},bus_id=#{arg0.bus_id},acc_name=#{arg0.acc_name},acc_psd=#{arg0.acc_psd},isStart=#{arg0.isStart},acc_time=#{arg0.acc_time} where acc_id=#{arg1}
 </update>
 
 <delete id="deleteAccount" parameterType="int">

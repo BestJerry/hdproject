@@ -11,7 +11,7 @@ public interface AccountMapper {
 	  * @return
 	  * throws Exception
 	  */
-     public int insertAccount(Account account) throws Exception;
+     public int insertAccount(Account account);
      
      /**
       * 修改账户
@@ -21,7 +21,7 @@ public interface AccountMapper {
       * @throws Exception
       * 
       */
-     public int updateAccount(Account account,int acc_id) throws Exception;
+     public int updateAccount(Account account,int acc_id);
      
      /**
       * 删除账户
@@ -30,7 +30,7 @@ public interface AccountMapper {
       * @return 
       * @throws Exception
       */
-     public int deleteAccount(int acc_id)throws Exception;
+     public int deleteAccount(int acc_id);
      
      /**
       * 根据acc_id查询账户信息
@@ -38,11 +38,11 @@ public interface AccountMapper {
       * @return
       * @throws Exception
       */
-     public Account selectAccountById(int acc_id)throws Exception;
+     public Account selectAccountById(int acc_id);
      
      /**
       * 查询所有的账户信息
       * 
       */
-     public List<Account> selectAllAccounts() throws Exception;
+     public List<Account> selectAllAccounts();
 }
