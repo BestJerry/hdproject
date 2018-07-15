@@ -15,12 +15,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.ibatis.session.SqlSession;
 import org.json.JSONObject;
 
+import com.hd.accountBusinessContactsmapper.AccountMapper;
+import com.hd.accountBusinessContactsmapper.BusinessMapper;
+import com.hd.accountBusinessContactsmapper.ContactsMapper;
 import com.hd.beans.Account;
 import com.hd.beans.Business;
 import com.hd.beans.Contacts;
-import com.hd.mapper.AccountMapper;
-import com.hd.mapper.BusinessMapper;
-import com.hd.mapper.ContactsMapper;
+
 import com.hd.tools.DBTools;
 import com.hd.tools.Response;
 
