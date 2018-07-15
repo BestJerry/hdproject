@@ -11,7 +11,6 @@ import com.hd.beans.Account;
 import com.hd.login.mapper.AccountMapper;
 import com.hd.tools.DBTools;
 
-
 /**
  * @author Jerry
  *
@@ -28,19 +27,20 @@ public class AccountClient {
 		selectAllAccount();
 	}
 
-	  private static void selectAllAccount(){
-	      SqlSession session=DBTools.getSession();
-	      AccountMapper mapper=session.getMapper(AccountMapper.class);
-	      try {
-	      List<Account> account = mapper.selectAllAccounts();
-
-	      System.out.println(account.toString());
-	      session.commit();
-	      } catch (Exception e) {
-	          e.printStackTrace();
-	          session.rollback();
-	      }finally {
+	private static void selectAllAccount() {
+		SqlSession session = DBTools.getSession();
+		AccountMapper mapper = session.getMapper(AccountMapper.class);
+		try {
+			List<Account> account = mapper.selectAllAccounts();
+			// Account account =
+			// mapper.selectAccountByNameAndPsw("jerry","123456");
+			System.out.println(account.toString());
+			session.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			session.rollback();
+		} finally {
 			session.close();
 		}
-	  }
+	}
 }

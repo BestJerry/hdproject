@@ -12,7 +12,7 @@
 
 
 	<select id="selectAccountByNameAndPsw" parameterType="string" resultType="Account">
-		select * from account where acc_name=#{acc_name} and acc_psd=#{acc_psd}
+		select * from account where acc_name=#{arg0} and acc_psd=#{arg1}
 	</select>
 
 	<select id="selectAllAccounts" resultType="Account">

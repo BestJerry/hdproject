@@ -33,19 +33,18 @@ public class LoginController implements Controller {
 	public JSONObject handleRequest(HttpServletRequest request, HttpServletResponse response) {
 
 		// TODO Auto-generated method stub
-		
 
-		JSONObject jsonObject;
+		JSONObject jsonObject = null;
 		Response result = new Response();
-		
+
 		if (!request.getParameter("verificationCode").equals(request.getSession().getAttribute("verificationCode"))) {
-			result.setData(new JSONObject());
+			result.setData(null);
 			result.setMessage("—È÷§¬Î¥ÌŒÛ");
 			result.setStatus("1");
 			jsonObject = new JSONObject(result);
 			return jsonObject;
 		}
-		
+
 		SqlSession session = DBTools.getSession();
 
 		AccountMapper accountMapper = session.getMapper(AccountMapper.class);
@@ -53,23 +52,25 @@ public class LoginController implements Controller {
 			Account account = accountMapper.selectAccountByNameAndPsw(request.getParameter("acc_name"),
 					request.getParameter("acc_psd"));
 
-			System.out.println(account.toString());
+			if (account == null) {
+				result.setData(null);
+				result.setMessage("’À∫≈≤ª¥Ê‘⁄ªÚ√‹¬Î¥ÌŒÛ");
+				result.setStatus("1");
+				jsonObject = new JSONObject(result);
 
-			result.setData(new JSONObject());
-			result.setMessage("");
-			result.setStatus("0");
-			jsonObject = new JSONObject(result);
-			HttpSession httpSession = request.getSession();
-			httpSession.setAttribute("account", account);
+			} else {
+				System.out.println(account.toString());
 
-			session.commit();
+				result.setData(null);
+				result.setMessage("");
+				result.setStatus("0");
+				jsonObject = new JSONObject(result);
+				HttpSession httpSession = request.getSession();
+				httpSession.setAttribute("account", account);
+			}
+
 		} catch (Exception e) {
 			// TODO: handle exception
-
-			result.setData(new JSONObject());
-			result.setMessage("’À∫≈≤ª¥Ê‘⁄ªÚ√‹¬Î¥ÌŒÛ");
-			result.setStatus("1");
-			jsonObject = new JSONObject(result);
 			session.rollback();
 		} finally {
 			session.close();
