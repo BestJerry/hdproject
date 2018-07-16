@@ -35,6 +35,10 @@
    select * from account where acc_id=#{acc_id}
 </select>
 
+<select id="selectAccountByName" resultType="string">
+   select acc_name from account where acc_name=#{acc_name}
+</select>
+
 <select id="selectAllAccounts" resultMap="accountMap">
    select * from account
 </select>
