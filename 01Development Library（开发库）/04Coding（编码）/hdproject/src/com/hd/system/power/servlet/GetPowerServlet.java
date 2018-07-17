@@ -44,6 +44,8 @@ public class GetPowerServlet extends HttpServlet {
 		}
 		Map<String,Object> map = new HashMap();
 		map.put("type2", list.get(0)==true?1:0);map.put("type3", list.get(1)==true?1:0);map.put("type4", list.get(2)==true?1:0);
+		res.setData(map);
+		System.out.println(new JSONObject(res));
 		response.getWriter().print(new JSONObject(res));
 	}
 

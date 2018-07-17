@@ -48,8 +48,8 @@ create table business
    bus_phone            varchar(50) not null,
    bus_postcode         numeric(10,0),
    bus_star             int not null comment '数据范围：0~5  表示0到5星级',
-   con_intergral        decimal not null,
-   discount             decimal not null,
+   con_intergral        decimal(3,2) not null,
+   discount             decimal(3,2) not null,
    primary key (bus_id)
 );
 
