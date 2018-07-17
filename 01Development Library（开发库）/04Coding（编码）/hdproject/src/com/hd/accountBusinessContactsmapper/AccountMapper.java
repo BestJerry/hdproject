@@ -40,7 +40,7 @@ public interface AccountMapper {
       */
      public Account selectAccountById(int acc_id);
      
-     public String selectAccountByName(String acc_name);
+     public Account selectAccountByName(String acc_name);
      
      /**
       * 查询所有的账户信息
