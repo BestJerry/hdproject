@@ -35,21 +35,22 @@ public class registerServlet extends HttpServlet {
 	}
      
     protected void doPost(HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException{
-          	//request.setCharacterEncoding("utf-8"); 不用request和response都不用转换编码
+          	//request.setCharacterEncoding("utf-8"); //不用request和response都不用转换编码
           	String bus_type=request.getParameter("bus_type");
           	String bus_name=request.getParameter("bus_name");
           	String bus_add=request.getParameter("bus_add");
           	String bus_phone=request.getParameter("bus_phone");
-          	String bus_postcode=request.getParameter("bus_postcode");
+          	String bus_postcode=request.getParameter("bus_postcode");if(bus_postcode.trim().equals(""))bus_postcode=null;
           	int bus_star=Integer.parseInt(request.getParameter("bus_star"));
           	double con_intergral=Double.parseDouble(request.getParameter("con_intergral"));
           	double discount=Double.parseDouble(request.getParameter("discount"));
           	String con_title=request.getParameter("con_title");
+          	
           	String con_name=request.getParameter("con_name");
           	String con_position=request.getParameter("con_position");
-          	String con_tel=request.getParameter("con_tel");
-          	String con_mobile=request.getParameter("con_mobile");
-          	String con_fax=request.getParameter("con_fax");
+          	String con_tel=request.getParameter("con_tel");if(con_tel.trim().equals(""))con_tel=null;
+          	String con_mobile=request.getParameter("con_mobile");if(con_mobile.trim().equals(""))con_mobile=null;
+          	String con_fax=request.getParameter("con_fax");if(con_fax.trim().equals(""))con_fax=null;
           	String con_email=request.getParameter("con_email");
           	String verificationCode=request.getParameter("verificationCode");
           	
@@ -59,6 +60,7 @@ public class registerServlet extends HttpServlet {
           			!verificationCode.equals(request.getSession().getAttribute("verificationCode"))) {
           			//检验验证码是否正确
           			res.setStatus("1");res.setMessage("验证码错误");
+          			//System.out.println
           			JSONObject resJson = new JSONObject(res);//将对象转换成json各式
           			out.print(resJson);//输出json字符串
           			return;//退出doPost方法

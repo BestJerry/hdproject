@@ -25,27 +25,27 @@ public class EncodeFilter implements Filter {
 	public void doFilter(ServletRequest arg0, ServletResponse arg1, FilterChain chain)
 			throws IOException, ServletException {
 		
-		HttpServletRequest request = (HttpServletRequest)arg0;
+		//HttpServletRequest request = (HttpServletRequest)arg0;
 		HttpServletResponse response = (HttpServletResponse)arg1;
 		
 		//获取请求类型
-		String method = request.getMethod();
-		//先对响应做编码转换
-		response.setCharacterEncoding("utf-8");
+		//String method = request.getMethod();
+		//设置响应编码，使Tomcat和浏览器使用相同编码方式
+		response.setContentType("application/json;charset=utf8");
 		
 		/**
 		 * 做相应的判断
 		 * 如果是get请求，则需要对request进行包装
 		 * 包装需要继承一个HttpServletRequestWrapper类
 		 */
-		if(method.equals("GET")) {
+		/*if(method.equals("GET")) {
 			EncodeRequest encodeRequest = new EncodeRequest(request);
 			chain.doFilter(encodeRequest, response);
 		} else {
 			request.setCharacterEncoding("utf-8");
 			chain.doFilter(arg0, arg1);
-		}
-		
+		}*/
+		chain.doFilter(arg0, arg1);
 	}
 
 	@Override
@@ -74,7 +74,7 @@ class EncodeRequest extends HttpServletRequestWrapper {
 		 */
 		if(param != null && !param.isEmpty()) {
 			try {
-				param = new String(param.getBytes("ISO8859-1"), "utf-8");
+				param = new String(param.getBytes("ISO-8859-1"), "utf-8");
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}

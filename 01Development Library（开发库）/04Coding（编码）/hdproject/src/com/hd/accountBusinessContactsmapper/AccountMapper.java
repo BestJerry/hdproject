@@ -40,9 +40,13 @@ public interface AccountMapper {
       */
      public Account selectAccountById(int acc_id);
      
+     public String selectAccountByName(String acc_name);
+     
      /**
       * 查询所有的账户信息
       * 
       */
      public List<Account> selectAllAccounts();
+     
+     public List<Account> searchAccounts(int start, int countEachPage, String account_name,int bus_id);
 }
