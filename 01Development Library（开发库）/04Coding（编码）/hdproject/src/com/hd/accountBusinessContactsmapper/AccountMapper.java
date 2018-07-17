@@ -47,4 +47,6 @@ public interface AccountMapper {
       * 
       */
      public List<Account> selectAllAccounts();
+     
+     public List<Account> searchAccounts(int start, int countEachPage, String account_name,int bus_id);
 }

@@ -43,4 +43,8 @@
    select * from account
 </select>
 
+<select id="searchAccounts" resultType="Account">
+	select * from account where bus_id=#{arg3} and acc_name like "%"#{arg2}"%" limit #{arg0},#{arg1}
+</select>
+
 </mapper>
