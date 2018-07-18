@@ -45,7 +45,6 @@ public class updatePassword extends HttpServlet {
   			return;
 		}else {//修改密码操作
 				account.setAcc_psd(newpsd);
-				
 				//数据库修改
 				int acc_id=account.getAcc_id();
 				SqlSession session=DBTools.getSession();
@@ -67,6 +66,7 @@ public class updatePassword extends HttpServlet {
 			
 		}
 		    //res.setData(account);
+		    res.setStatus("0");
 		    res.setMessage("修改密码成功!");
 			JSONObject resJson = new JSONObject(res);//将对象转换成json各式
 			out.print(resJson);//输出json字符串
