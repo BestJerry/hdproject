@@ -35,7 +35,7 @@
    select * from account where acc_id=#{acc_id}
 </select>
 
-<select id="selectAccountByName" resultType="string">
+<select id="selectAccountByName" resultType="Account">
    select acc_name from account where acc_name=#{acc_name}
 </select>
 

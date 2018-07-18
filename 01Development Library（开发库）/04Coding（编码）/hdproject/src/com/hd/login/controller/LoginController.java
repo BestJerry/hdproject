@@ -66,6 +66,8 @@ public class LoginController implements Controller {
 				jsonObject = new JSONObject(result);
 				HttpSession httpSession = request.getSession();
 				httpSession.setAttribute("account", account);
+				//设置会话失效时间两个小时。  无设置时默认为30分钟
+				httpSession.setMaxInactiveInterval(7200);
 			}
 
 		} catch (Exception e) {

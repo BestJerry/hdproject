@@ -38,7 +38,8 @@ public class GetAccountServlet extends HttpServlet {
 		if(tPage != null) page = Integer.parseInt(tPage);
 		if(tEach != null) each = Integer.parseInt(tEach);
 		String account_name = request.getParameter("account_name");
-		account_name = account_name.trim(); //去除前缀和后缀空格
+		if(account_name == null) account_name = "";
+		else account_name = account_name.trim(); //去除前缀和后缀空格
 		
 		SqlSession sqlSession = DBTools.getSession();
 		AccountMapper mapper = sqlSession.getMapper(AccountMapper.class);

@@ -18,7 +18,7 @@ import com.hd.beans.Account;
 import com.hd.tools.DBTools;
 import com.hd.tools.Response;
 
-@WebServlet("updateSubaccountStatus")
+@WebServlet("/updateSubaccountStatus")
 public class UpdateSubaccountStatusServlet extends HttpServlet {
 
 	public UpdateSubaccountStatusServlet() {
@@ -42,7 +42,7 @@ public class UpdateSubaccountStatusServlet extends HttpServlet {
 		AccountMapper mapper = sqlSession.getMapper(AccountMapper.class);
 		try {
 			Account account = mapper.selectAccountById(acc_id);
-			account.setStart(isStart!=0);
+			account.setIsStart(isStart!=0);
 			mapper.updateAccount(account, acc_id);
 			sqlSession.commit();
 		} catch(Exception sqlException){

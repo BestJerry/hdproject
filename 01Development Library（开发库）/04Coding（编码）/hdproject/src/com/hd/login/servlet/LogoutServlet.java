@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class LogoutServlet
@@ -39,8 +40,11 @@ public class LogoutServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		request.getSession().invalidate();
+		//request.getSession()底层的实现，如果发现没有session立即创建
+		HttpSession session = request.getSession(false);
+		if(session != null && session.getAttribute("account") != null) { //表示有session并且有登录标记
+			session.invalidate();
+		}
 	}
 
 }
