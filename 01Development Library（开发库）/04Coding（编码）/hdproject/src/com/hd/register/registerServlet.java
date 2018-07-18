@@ -35,7 +35,6 @@ public class registerServlet extends HttpServlet {
 	}
      
     protected void doPost(HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException{
-          	//request.setCharacterEncoding("utf-8"); //不用request和response都不用转换编码
           	String bus_type=request.getParameter("bus_type");
           	String bus_name=request.getParameter("bus_name");
           	String bus_add=request.getParameter("bus_add");
@@ -127,24 +126,14 @@ public class registerServlet extends HttpServlet {
     private boolean isSame(String acc_name){
     	SqlSession session=DBTools.getSession();
 		AccountMapper mapper=session.getMapper(AccountMapper.class);
-		List<Account> accounts = null;
+		boolean isSame=false;
 		try{
-			accounts=mapper.selectAllAccounts();
-			System.out.println(accounts.toString());
-			session.commit();
+			Account account = mapper.selectAccountByName(acc_name);
+			if(account != null) isSame = true;
 		}catch (Exception e) {
 			e.printStackTrace();
-			session.rollback();
-			// TODO: handle exception
 		} finally {
 			session.close();
-		}
-		boolean isSame=false;
-		for(Account account:accounts){
-			if(acc_name.equals(account.getAcc_name())){
-				isSame=true;
-				break;
-			}	
 		}
 		return isSame;
     }
@@ -158,9 +147,8 @@ public class registerServlet extends HttpServlet {
 		ContactsMapper mapper=session.getMapper(ContactsMapper.class);
 		Contacts contacts=new Contacts(con_title, con_name, con_position, con_tel, con_mobile, con_fax, con_email);
 		try{
-			con_id=mapper.insertContacts(contacts);
-			//con_id=contacts.getCon_id();
-			System.out.println(contacts.toString());
+			mapper.insertContacts(contacts);
+			con_id=contacts.getCon_id();
 			session.commit();
 		}catch (Exception e) {
 		    e.printStackTrace();
@@ -182,12 +170,11 @@ public class registerServlet extends HttpServlet {
 		Business business=new Business(con_id, bus_type, bus_name, bus_add, bus_phone, bus_postcode, bus_star, con_intergral, discount);
 		int bus_id = 0;//要获取的自增主键
 		try{
-			bus_id = mapper.insertBusiness(business);
-			System.out.println(business.toString());
+			mapper.insertBusiness(business);
+			bus_id= business.getBus_id();
 			session.commit();
 		}catch (Exception e) {
 		    e.printStackTrace();
-		    System.out.println("business fail");
 		    session.rollback();
 		} finally {
 			session.close();

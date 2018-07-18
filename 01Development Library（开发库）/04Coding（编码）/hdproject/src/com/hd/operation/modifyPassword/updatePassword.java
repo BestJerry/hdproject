@@ -30,20 +30,34 @@ public class updatePassword extends HttpServlet {
 		String oldpsd=request.getParameter("oldpsd");
 		String newpsd=request.getParameter("newpsd");
 		String confirm=request.getParameter("confirm");
+		
     	
       	PrintWriter out = response.getWriter();//初始化响应的输出对象
-
+      	if(oldpsd== null||newpsd==null||confirm==null){
+      			res.setStatus("1");res.setMessage("输入错误");
+      			JSONObject resJson = new JSONObject(res);//将对象转换成json各式
+      			out.print(resJson);//输出json字符串
+      			return;//退出doPost方法
+      	}
+      	
       	HttpSession httpSession = request.getSession();
-      	Account account=(Account)httpSession.getAttribute("account");
+      	Account account=(Account)httpSession.getAttribute("Account");
 	    String correct_password=account.getAcc_psd();//获取正确密码
        
 		
-		if(!correct_password.equals(oldpsd)){//原密码与正确密码不一致
+		if(correct_password!=oldpsd){//原密码与正确密码不一致
 			res.setStatus("1");res.setMessage("原密码输入错误");
   			JSONObject resJson = new JSONObject(res);//将对象转换成json各式
   			out.print(resJson);
   			return;
-		}else {//修改密码操作
+		}else {
+			if(newpsd!=confirm){//两次输入密码不一致
+				res.setStatus("1");res.setMessage("两次新密码输入不一致！");
+      			JSONObject resJson = new JSONObject(res);//将对象转换成json各式
+      			out.print(resJson);//输出json字符串
+      			return;//退出doPost方法
+			}
+			else{//修改密码操作
 				account.setAcc_psd(newpsd);
 				
 				//数据库修改
@@ -64,7 +78,7 @@ public class updatePassword extends HttpServlet {
 				} finally {
 					session.close();
 				}
-			
+			}
 		}
 		    //res.setData(account);
 		    res.setMessage("修改密码成功!");

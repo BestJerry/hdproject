@@ -18,7 +18,7 @@ import com.hd.beans.Account;
 import com.hd.tools.DBTools;
 import com.hd.tools.Response;
 
-@WebServlet("updateSubaccountStatus")
+@WebServlet("/updateSubaccountStatus")
 public class UpdateSubaccountStatusServlet extends HttpServlet {
 
 	public UpdateSubaccountStatusServlet() {
