@@ -55,10 +55,10 @@ public class Account {
 	public void setAcc_psd(String acc_psd) {
 		this.acc_psd = acc_psd;
 	}
-	public boolean isStart() {
+	public boolean getIsStart() {
 		return isStart;
 	}
-	public void setStart(boolean isStart) {
+	public void setIsStart(boolean isStart) {
 		this.isStart = isStart;
 	}
 	public Date getAcc_time() {
