@@ -1,0 +1,2351 @@
+
+        <html xmlns:v="urn:schemas-microsoft-com:vml"
+        xmlns:o="urn:schemas-microsoft-com:office:office"
+        xmlns:w="urn:schemas-microsoft-com:office:word"
+        xmlns="http://www.w3.org/TR/REC-html40">
+        <head><meta http-equiv=Content-Type content="text/html;  
+        charset=utf-8">
+        <style type="text/css">
+            table  
+            {  
+                border-collapse: collapse;
+                border: none;  
+                width: 100%;  
+            }  
+            td  
+            {  
+                border: solid #CCC 1px;  
+            }  
+            .codestyle{
+                word-break: break-all;
+                background:silver;mso-highlight:silver;
+            }
+        </style>
+        <meta name=ProgId content=Word.Document>
+        <meta name=Generator content="Microsoft Word 11">
+        <meta name=Originator content="Microsoft Word 11">
+        <xml><w:WordDocument><w:View>Print</w:View></xml></head>
+        <body><h1>1、通用</h1><div style="margin-left:20px;"><h2>1.1、验证码图片</h2><div style="margin-left:20px;"><p><strong>简要描述：</strong></p>
+<ul>
+<li>验证码图片接口</li>
+</ul>
+<p><strong>请求URL：</strong></p>
+<ul>
+<li><code>./general/verificationCode</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>
+<p>GET</p>
+<p><strong>返回示例</strong></p>
+</li>
+</ul>
+<table width='100%' class='codestyle'><pre><code>  直接返回图片流</code></pre></table>
+<p><strong>验证码图片大小</strong></p>
+<ul>
+<li>
+<p>80X40 的规格大小</p>
+<p><strong>备注</strong></p>
+</li>
+<li>后端在生成随机验证码后需记录在session中，属性字段名为"verificationCode"</li>
+</ul></div><h2>1.2、查询当前登陆用户的所有账号信息</h2><div style="margin-left:20px;"><p><strong>简要描述：</strong></p>
+<ul>
+<li>查询当前已登陆用户的账号，用于前端判断角色权限等功能</li>
+</ul>
+<p><strong>请求URL：</strong></p>
+<ul>
+<li><code>./general/getAccount</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>GET</li>
+</ul>
+<p><strong>参数：无</strong></p>
+<p><strong>返回示例</strong>
+若当前为商家账号：</p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th>字段名</th>
+<th>必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>account</td>
+<td>是</td>
+<td>string</td>
+<td>登录账号</td>
+</tr>
+<tr>
+<td>password</td>
+<td>是</td>
+<td>string</td>
+<td>登录密码</td>
+</tr>
+<tr>
+<td>b_id</td>
+<td>是</td>
+<td>int</td>
+<td>商家编号</td>
+</tr>
+<tr>
+<td>account_type</td>
+<td>是</td>
+<td>int(1,2,3)</td>
+<td>账号类型 1：管理员 2：前台 3：经理</td>
+</tr>
+<tr>
+<td>state</td>
+<td>是</td>
+<td>int(0,1)</td>
+<td>启用状态 1：可用 0：停用</td>
+</tr>
+</tbody>
+</table>
+<p>若当前为会员账号：</p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th>字段名</th>
+<th>必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>account</td>
+<td>是</td>
+<td>string</td>
+<td>会员登录账号</td>
+</tr>
+<tr>
+<td>card_id</td>
+<td>是</td>
+<td>string</td>
+<td>会员卡编号</td>
+</tr>
+<tr>
+<td>name</td>
+<td>是</td>
+<td>string</td>
+<td>姓名</td>
+</tr>
+<tr>
+<td>sex</td>
+<td>是</td>
+<td>string（男，女）</td>
+<td>性别</td>
+</tr>
+<tr>
+<td>phone</td>
+<td>是</td>
+<td>string</td>
+<td>电话</td>
+</tr>
+<tr>
+<td>address</td>
+<td>否</td>
+<td>string</td>
+<td>地址</td>
+</tr>
+<tr>
+<td>email</td>
+<td>是</td>
+<td>string</td>
+<td>邮箱</td>
+</tr>
+</tbody>
+</table>
+<table width='100%' class='codestyle'><pre><code>  {
+     data: {
+      /*
+      *  相应账号的所有字段信息
+      */
+    },
+    "status":"0",
+    "message":""
+  }</code></pre></table>
+<p><strong>返回参数说明：相应字段见数据库 account表、vip表</strong></p></div></div><h1>2、商家平台管理</h1><div style="margin-left:20px;"><h2>2.1、商家加盟注册</h2><div style="margin-left:20px;"><p><strong>简要描述：</strong></p>
+<ul>
+<li>商家加盟注册接口，注册成功后，告知用户其商家加盟申请进入审核阶段，将以邮件通知审核结果</li>
+</ul>
+<p><strong>请求URL：</strong></p>
+<ul>
+<li><code>./business/register</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST</li>
+</ul>
+<p><strong>参数：</strong></p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th>字段名</th>
+<th>必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>b_name</td>
+<td>是</td>
+<td>string</td>
+<td>商家名称</td>
+</tr>
+<tr>
+<td>type</td>
+<td>是</td>
+<td>string</td>
+<td>商家类型（行业），仅包括：娱乐，旅游，购物，交通，住宿，餐饮</td>
+</tr>
+<tr>
+<td>address</td>
+<td>是</td>
+<td>string（省+市+区+地址）</td>
+<td>商家地址</td>
+</tr>
+<tr>
+<td>b_telephone</td>
+<td>是</td>
+<td>string</td>
+<td>商家电话</td>
+</tr>
+<tr>
+<td>postcode</td>
+<td>否</td>
+<td>string</td>
+<td>邮政编码</td>
+</tr>
+<tr>
+<td>c_name</td>
+<td>是</td>
+<td>string</td>
+<td>联系人姓名</td>
+</tr>
+<tr>
+<td>c_gender</td>
+<td>是</td>
+<td>string</td>
+<td>联系人性别，仅包括：先生，女士</td>
+</tr>
+<tr>
+<td>c_position</td>
+<td>是</td>
+<td>string</td>
+<td>联系人职位</td>
+</tr>
+<tr>
+<td>c_telephone</td>
+<td>否</td>
+<td>string</td>
+<td>联系人电话</td>
+</tr>
+<tr>
+<td>c_cellphone</td>
+<td>否</td>
+<td>string</td>
+<td>联系人手机</td>
+</tr>
+<tr>
+<td>c_fax</td>
+<td>否</td>
+<td>string</td>
+<td>联系人传真</td>
+</tr>
+<tr>
+<td>c_mail</td>
+<td>是</td>
+<td>string</td>
+<td>联系人邮箱</td>
+</tr>
+<tr>
+<td>verificationCode</td>
+<td>是</td>
+<td>string</td>
+<td>验证码</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回参数说明：</strong></p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th>字段名</th>
+<th>必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>data:"0"</td>
+<td>是</td>
+<td>int</td>
+<td>注册成功，进入审核阶段;审核结果将发送至联系人邮箱</td>
+</tr>
+<tr>
+<td>data:"1"</td>
+<td>是</td>
+<td>int</td>
+<td>验证码错误</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回示例：</strong></p>
+<table width='100%' class='codestyle'><pre><code>    {
+        data:"0",
+        status:"0",
+        message:""
+    }
+
+------------
+
+    {
+        data:"1",
+        status:"0",
+        message:""
+    }</code></pre></table>
+<p><strong>备注</strong></p></div><h2>2.1、商家账户管理</h2><div style="margin-left:20px;"><h3>2.1.1、子账号启用状态修改</h3><div style="margin-left:30px;"><p><strong>请求URL：</strong></p>
+<ul>
+<li><code>./businessAccount/updateState</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST</li>
+</ul>
+<p><strong>参数：</strong></p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">account</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>子账号</td>
+</tr>
+<tr>
+<td style="text-align: left;">state</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">int(0,1)</td>
+<td>启用状态1：可用 0：停用</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回参数说明：无</strong></p>
+<p><strong>返回示例：</strong></p>
+<table width='100%' class='codestyle'><pre><code>  {
+    "data":null,
+    "status": "0",
+    "message":""
+  }</code></pre></table></div><h3>2.1.2、删除子账号</h3><div style="margin-left:30px;"><p><strong>请求URL：</strong></p>
+<ul>
+<li><code>./businessAccount/deleteAccount</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST</li>
+</ul>
+<p><strong>参数：</strong></p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">account</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>删除的子账号</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回参数说明：无</strong></p>
+<p><strong>返回示例：</strong></p>
+<table width='100%' class='codestyle'><pre><code>  {
+    "data":null,
+    "status": "0",
+    "message":""
+  }</code></pre></table></div><h3>2.1.3、子账号密码初始化</h3><div style="margin-left:30px;"><p><strong>请求URL：</strong></p>
+<ul>
+<li><code>./businessAccount/initPassword</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST</li>
+</ul>
+<p><strong>参数：</strong></p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">account</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>需初始化的子账号</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回参数说明：无</strong></p>
+<p><strong>返回示例：</strong></p>
+<table width='100%' class='codestyle'><pre><code>  {
+    "data":null,
+    "status": "0",
+    "message":""
+  }</code></pre></table></div><h3>2.1.4、获取所有子账号</h3><div style="margin-left:30px;"><p><strong>请求URL：</strong></p>
+<ul>
+<li><code>./businessAccount/getAllAccount</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>GET</li>
+</ul>
+<p><strong>参数：无</strong></p>
+<p><strong>返回参数说明</strong></p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th>字段名</th>
+<th>必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>account</td>
+<td>是</td>
+<td>string</td>
+<td>登录账号</td>
+</tr>
+<tr>
+<td>password</td>
+<td>是</td>
+<td>string</td>
+<td>登录密码</td>
+</tr>
+<tr>
+<td>account_type</td>
+<td>是</td>
+<td>int(1,2,3)</td>
+<td>账号类型 1：管理员 2：前台 3：经理</td>
+</tr>
+<tr>
+<td>state</td>
+<td>是</td>
+<td>int(0,1)</td>
+<td>启用状态 1：可用 0：停用</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回示例：</strong></p>
+<table width='100%' class='codestyle'><pre><code>  {
+    "data":[
+        {
+            /*
+            * account表对应字段
+            */
+        },
+        {...},
+        ...
+    ],
+    "status": "0",
+    "message":""
+  }</code></pre></table></div><h3>2.1.5、添加子账号</h3><div style="margin-left:30px;"><p><strong>请求URL：</strong></p>
+<ul>
+<li><code>./businessAccount/addAccount</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST</li>
+</ul>
+<p><strong>参数：</strong></p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">account_type</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">int(1,2,3)</td>
+<td>账号类型 1：管理员 2：前台 3：经理</td>
+</tr>
+<tr>
+<td style="text-align: left;">state</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">int(0,1)</td>
+<td>启用状态 1：可用 0：停用</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回参数说明</strong></p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">account</td>
+<td style="text-align: left;">string</td>
+<td>分配的账号</td>
+</tr>
+<tr>
+<td style="text-align: left;">password</td>
+<td style="text-align: left;">string</td>
+<td>分配的密码</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回示例：</strong></p>
+<table width='100%' class='codestyle'><pre><code>  {
+    "data":{
+        "account":"ami04235",
+        "password":"ami04235"
+    },
+    "status": "0",
+    "message":""
+  }</code></pre></table></div></div><h2>2.2、商家登录管理</h2><div style="margin-left:20px;"><h3>2.2.1、密码修改</h3><div style="margin-left:30px;"><p><strong>请求URL：</strong></p>
+<ul>
+<li><code>./businessLog/updatePassowrd</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST</li>
+</ul>
+<p><strong>参数：</strong></p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">oldPassowrd</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>原密码</td>
+</tr>
+<tr>
+<td style="text-align: left;">newPassowrd</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>新密码</td>
+</tr>
+<tr>
+<td style="text-align: left;">confirmPassowrd</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>确认新密码</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回参数说明：无</strong></p>
+<p><strong>返回示例：无</strong></p></div><h3>2.2.2、忘记密码</h3><div style="margin-left:30px;"><p><strong>请求URL：</strong></p>
+<ul>
+<li><code>./businessLog/forgetPassword</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST</li>
+</ul>
+<p><strong>参数：</strong></p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">account</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>登录账号</td>
+</tr>
+<tr>
+<td style="text-align: left;">verificationCode</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>验证码</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回参数说明：若成功执行，则提醒用户 重制密码链接已发至其邮箱</strong></p>
+<p><strong>返回示例：无</strong></p></div><h3>2.2.3、登录系统</h3><div style="margin-left:30px;"><p><strong>请求URL：</strong></p>
+<ul>
+<li><code>./businessLog/login</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST</li>
+</ul>
+<p><strong>参数：</strong></p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">account</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>登录账号</td>
+</tr>
+<tr>
+<td style="text-align: left;">password</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>登录密码</td>
+</tr>
+<tr>
+<td style="text-align: left;">verificationCode</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>验证码</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回参数说明：</strong></p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">data="0"</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">int</td>
+<td>登录成功</td>
+</tr>
+<tr>
+<td style="text-align: left;">data="1"</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">int</td>
+<td>密码错误</td>
+</tr>
+<tr>
+<td style="text-align: left;">data="2"</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">int</td>
+<td>验证码错误</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回示例：</strong></p>
+<table width='100%' class='codestyle'><pre><code>  {
+    "data": "0",
+    "status": "0",
+    "message":""
+  }</code></pre></table>
+<p><strong>备注：</strong>
+成功登陆后，后端需将该用户信息对象(account表)存入session中，属性名为"account"</p></div><h3>2.2.4、退出系统</h3><div style="margin-left:30px;"><p><strong>请求URL：</strong></p>
+<ul>
+<li><code>./businessLog/logout</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST</li>
+</ul>
+<p><strong>参数：无</strong></p>
+<p><strong>返回参数说明：无</strong></p>
+<p><strong>返回示例：无</strong></p></div></div><h2>2.3、商家展示信息维护</h2><div style="margin-left:20px;"><h3>2.3.1、修改产品</h3><div style="margin-left:30px;"><p><strong>请求URL：</strong></p>
+<ul>
+<li><code>./businessInfo/updateProduct</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST</li>
+</ul>
+<p><strong>参数：</strong></p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th>字段名</th>
+<th>必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>是</td>
+<td>string</td>
+<td>产品名称</td>
+</tr>
+<tr>
+<td>price</td>
+<td>是</td>
+<td>double</td>
+<td>产品价格</td>
+</tr>
+<tr>
+<td>vip_price</td>
+<td>是</td>
+<td>double</td>
+<td>会员价格</td>
+</tr>
+<tr>
+<td>introduction</td>
+<td>否</td>
+<td>string</td>
+<td>产品介绍</td>
+</tr>
+<tr>
+<td>picture</td>
+<td>否</td>
+<td>图片文件</td>
+<td>产品图片</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回参数说明：无</strong></p></div><h3>2.3.2、获取产品信息</h3><div style="margin-left:30px;"><p><strong>请求URL：</strong></p>
+<ul>
+<li><code>./businessInfo/getProduct</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST</li>
+</ul>
+<p><strong>参数：</strong></p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th>字段名</th>
+<th>必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>是</td>
+<td>int</td>
+<td>产品编号</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回参数说明</strong></p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th>字段名</th>
+<th>必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>是</td>
+<td>int</td>
+<td>产品编号</td>
+</tr>
+<tr>
+<td>name</td>
+<td>是</td>
+<td>string</td>
+<td>产品名称</td>
+</tr>
+<tr>
+<td>price</td>
+<td>是</td>
+<td>double</td>
+<td>产品价格</td>
+</tr>
+<tr>
+<td>vip_price</td>
+<td>是</td>
+<td>double</td>
+<td>会员价格</td>
+</tr>
+<tr>
+<td>introduction</td>
+<td>否</td>
+<td>string</td>
+<td>产品介绍</td>
+</tr>
+<tr>
+<td>picture_path</td>
+<td>否</td>
+<td>string</td>
+<td>图片路径</td>
+</tr>
+</tbody>
+</table></div><h3>2.3.3、获取当前登录商家资料</h3><div style="margin-left:30px;"><p><strong>请求URL：</strong></p>
+<ul>
+<li><code>./businessInfo/getInfo</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>GET</li>
+</ul>
+<p><strong>参数：无</strong></p>
+<p><strong>返回参数说明</strong></p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th>字段名</th>
+<th>必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>是</td>
+<td>int</td>
+<td>商家编号</td>
+</tr>
+<tr>
+<td>b_name</td>
+<td>是</td>
+<td>string</td>
+<td>商家名称</td>
+</tr>
+<tr>
+<td>type</td>
+<td>是</td>
+<td>string</td>
+<td>商家类型（行业），仅包括：娱乐，旅游，购物，交通，住宿，餐饮</td>
+</tr>
+<tr>
+<td>address</td>
+<td>是</td>
+<td>string（省+市+区+地址）</td>
+<td>商家地址</td>
+</tr>
+<tr>
+<td>b_telephone</td>
+<td>是</td>
+<td>string</td>
+<td>商家电话</td>
+</tr>
+<tr>
+<td>postcode</td>
+<td>否</td>
+<td>string</td>
+<td>邮政编码</td>
+</tr>
+<tr>
+<td>c_name</td>
+<td>是</td>
+<td>string</td>
+<td>联系人姓名</td>
+</tr>
+<tr>
+<td>c_gender</td>
+<td>是</td>
+<td>string</td>
+<td>联系人性别，仅包括：先生，女士</td>
+</tr>
+<tr>
+<td>c_position</td>
+<td>是</td>
+<td>string</td>
+<td>联系人职位</td>
+</tr>
+<tr>
+<td>c_telephone</td>
+<td>否</td>
+<td>string</td>
+<td>联系人电话</td>
+</tr>
+<tr>
+<td>c_cellphone</td>
+<td>否</td>
+<td>string</td>
+<td>联系人手机</td>
+</tr>
+<tr>
+<td>c_fax</td>
+<td>否</td>
+<td>string</td>
+<td>联系人传真</td>
+</tr>
+<tr>
+<td>c_mail</td>
+<td>是</td>
+<td>string</td>
+<td>联系人邮箱</td>
+</tr>
+<tr>
+<td>b_picture</td>
+<td>否</td>
+<td>string</td>
+<td>商家图片路径</td>
+</tr>
+</tbody>
+</table></div><h3>2.3.4、添加产品</h3><div style="margin-left:30px;"><p><strong>请求URL：</strong></p>
+<ul>
+<li><code>./businessInfo/addProduct</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST</li>
+</ul>
+<p><strong>参数：</strong></p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th>字段名</th>
+<th>必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>是</td>
+<td>string</td>
+<td>产品名称</td>
+</tr>
+<tr>
+<td>price</td>
+<td>是</td>
+<td>double</td>
+<td>产品价格</td>
+</tr>
+<tr>
+<td>vip_price</td>
+<td>是</td>
+<td>double</td>
+<td>会员价格</td>
+</tr>
+<tr>
+<td>introduction</td>
+<td>否</td>
+<td>string</td>
+<td>产品介绍</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回参数说明：无</strong></p></div><h3>2.3.5、修改商家资料</h3><div style="margin-left:30px;"><p><strong>请求URL：</strong></p>
+<ul>
+<li><code>./businessInfo/updateInfo</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST</li>
+</ul>
+<p><strong>参数：</strong></p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th>字段名</th>
+<th>必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>b_name</td>
+<td>是</td>
+<td>string</td>
+<td>商家名称</td>
+</tr>
+<tr>
+<td>type</td>
+<td>是</td>
+<td>string</td>
+<td>商家类型（行业），仅包括：娱乐，旅游，购物，交通，住宿，餐饮</td>
+</tr>
+<tr>
+<td>address</td>
+<td>是</td>
+<td>string（省+市+区+地址）</td>
+<td>商家地址</td>
+</tr>
+<tr>
+<td>b_telephone</td>
+<td>是</td>
+<td>string</td>
+<td>商家电话</td>
+</tr>
+<tr>
+<td>postcode</td>
+<td>否</td>
+<td>string</td>
+<td>邮政编码</td>
+</tr>
+<tr>
+<td>c_name</td>
+<td>是</td>
+<td>string</td>
+<td>联系人姓名</td>
+</tr>
+<tr>
+<td>c_gender</td>
+<td>是</td>
+<td>string</td>
+<td>联系人性别，仅包括：先生，女士</td>
+</tr>
+<tr>
+<td>c_position</td>
+<td>是</td>
+<td>string</td>
+<td>联系人职位</td>
+</tr>
+<tr>
+<td>c_telephone</td>
+<td>否</td>
+<td>string</td>
+<td>联系人电话</td>
+</tr>
+<tr>
+<td>c_cellphone</td>
+<td>否</td>
+<td>string</td>
+<td>联系人手机</td>
+</tr>
+<tr>
+<td>c_fax</td>
+<td>否</td>
+<td>string</td>
+<td>联系人传真</td>
+</tr>
+<tr>
+<td>c_mail</td>
+<td>是</td>
+<td>string</td>
+<td>联系人邮箱</td>
+</tr>
+<tr>
+<td>picture</td>
+<td>否</td>
+<td>图片文件</td>
+<td>商家图片</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回参数说明：无</strong></p></div><h3>2.3.6、获取当前登录商家的所有产品信息</h3><div style="margin-left:30px;"><p><strong>请求URL：</strong></p>
+<ul>
+<li><code>./businessInfo/getAllProduct</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>GET</li>
+</ul>
+<p><strong>参数：</strong></p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th>字段名</th>
+<th>必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>是</td>
+<td>int</td>
+<td>产品编号</td>
+</tr>
+<tr>
+<td>name</td>
+<td>是</td>
+<td>string</td>
+<td>产品名称</td>
+</tr>
+<tr>
+<td>price</td>
+<td>是</td>
+<td>double</td>
+<td>产品价格</td>
+</tr>
+<tr>
+<td>vip_price</td>
+<td>是</td>
+<td>double</td>
+<td>会员价格</td>
+</tr>
+<tr>
+<td>introduction</td>
+<td>否</td>
+<td>string</td>
+<td>产品介绍</td>
+</tr>
+<tr>
+<td>picture_path</td>
+<td>否</td>
+<td>string</td>
+<td>图片路径</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回参数说明：返回的data对象为数组，包含了所有product对象</strong></p>
+<p><strong>返回示例</strong></p>
+<table width='100%' class='codestyle'><pre><code>  {
+    "data": [
+        {
+            /*
+            * product表对应字段
+            */
+        },
+        {...},
+        {...}
+    ],
+    "status": "0",
+    "message":""
+  }</code></pre></table>
+<p><strong>备注</strong></p></div></div><h2>2.4、商家会员管理</h2><div style="margin-left:20px;"><h3>2.4.1、会员卡消费</h3><div style="margin-left:30px;"><p><strong>请求URL：</strong></p>
+<ul>
+<li><code>./businessVip/consume</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST</li>
+</ul>
+<p><strong>参数：</strong></p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>会员卡编号</td>
+</tr>
+<tr>
+<td style="text-align: left;">type</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>消费方式：现金，储值余额</td>
+</tr>
+<tr>
+<td style="text-align: left;">money</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">double</td>
+<td>消费金额</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回参数说明：无</strong></p>
+<p><strong>备注：后端完成消费操作后 需记录到消费历史表</strong></p></div><h3>2.4.2、添加会员</h3><div style="margin-left:30px;"><p><strong>请求URL：</strong></p>
+<ul>
+<li><code>./businessVip/addVip</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST</li>
+</ul>
+<p><strong>参数：</strong></p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th>字段名</th>
+<th>必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>是</td>
+<td>string</td>
+<td>姓名</td>
+</tr>
+<tr>
+<td>sex</td>
+<td>是</td>
+<td>string</td>
+<td>性别</td>
+</tr>
+<tr>
+<td>phone</td>
+<td>是</td>
+<td>string</td>
+<td>电话</td>
+</tr>
+<tr>
+<td>address</td>
+<td>否</td>
+<td>string</td>
+<td>地址</td>
+</tr>
+<tr>
+<td>email</td>
+<td>是</td>
+<td>string</td>
+<td>邮箱</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回参数说明</strong></p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">account</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>会员登录账号</td>
+</tr>
+<tr>
+<td style="text-align: left;">card_id</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>会员卡号</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回示例</strong></p>
+<table width='100%' class='codestyle'><pre><code>  {
+    "data": {
+      "account": "ami201807",
+      "card_id": 18071576226390
+    },
+    "status": "0",
+    "message":""
+  }</code></pre></table>
+<p><strong>备注：成功执行后告知用户 会员的初始登录密码与消费密码均为手机号</strong></p></div><h3>2.4.3、会员卡充值</h3><div style="margin-left:30px;"><p><strong>请求URL：</strong></p>
+<ul>
+<li><code>./businessVip/recharge</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST</li>
+</ul>
+<p><strong>参数：</strong></p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th>字段名</th>
+<th>必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>是</td>
+<td>string</td>
+<td>会员卡编号</td>
+</tr>
+<tr>
+<td>money</td>
+<td>是</td>
+<td>double</td>
+<td>充值金额</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回参数说明：无</strong></p>
+<p><strong>备注：后端完成充值操作后 需记录到充值历史表</strong></p></div></div><h2>2.5、商家报表统计</h2><div style="margin-left:20px;"><h3>2.5.1、会员消费历史统计</h3><div style="margin-left:30px;"><p><strong>请求URL：</strong></p>
+<ul>
+<li><code>./businessStatistics/consumption</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>GET</li>
+</ul>
+<p><strong>参数：前端以打开新页面的方式请求该链接，方可让浏览器自动下载文件</strong></p></div><h3>2.5.2、接待员情况统计</h3><div style="margin-left:30px;"><p><strong>请求URL：</strong></p>
+<ul>
+<li><code>./businessStatistics/issuerAccount</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>GET</li>
+</ul>
+<p><strong>参数：前端以打开新页面的方式请求该链接，方可让浏览器自动下载文件</strong></p></div></div></div><h1>3、会员中心功能</h1><div style="margin-left:20px;"><h2>3.1、会员登录</h2><div style="margin-left:20px;"><p><strong>请求URL：</strong></p>
+<ul>
+<li><code>./vip/login</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST</li>
+</ul>
+<p><strong>参数：</strong></p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">account</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>会员登录账号</td>
+</tr>
+<tr>
+<td style="text-align: left;">login_password</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>会员登录密码</td>
+</tr>
+<tr>
+<td style="text-align: left;">verificationCode</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>验证码</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回参数说明</strong></p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">data="0"</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">int</td>
+<td>登录成功</td>
+</tr>
+<tr>
+<td style="text-align: left;">data="1"</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">int</td>
+<td>密码错误</td>
+</tr>
+<tr>
+<td style="text-align: left;">data="2"</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">int</td>
+<td>验证码错误</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回示例</strong></p>
+<table width='100%' class='codestyle'><pre><code>  {
+    "data": "0",
+    "status": "0",
+    "message":""
+  }</code></pre></table>
+<p><strong>备注：</strong>
+成功登陆后，后端需将该用户信息对象(vip表)存入session中，属性名为"vip"</p></div><h2>3.2、消费历史查询</h2><div style="margin-left:20px;"><p><strong>请求URL：</strong></p>
+<ul>
+<li><code>./vip/consumeHistory</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>GET</li>
+</ul>
+<p><strong>参数：无</strong></p>
+<p><strong>返回参数说明</strong></p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th>字段名</th>
+<th>必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>是</td>
+<td>int</td>
+<td>消费编号</td>
+</tr>
+<tr>
+<td>b_id</td>
+<td>是</td>
+<td>int</td>
+<td>商家编号</td>
+</tr>
+<tr>
+<td>type</td>
+<td>是</td>
+<td>string</td>
+<td>消费方式：现金，储值余额</td>
+</tr>
+<tr>
+<td>money</td>
+<td>是</td>
+<td>double</td>
+<td>消费金额</td>
+</tr>
+<tr>
+<td>date</td>
+<td>是</td>
+<td>date</td>
+<td>消费时间</td>
+</tr>
+<tr>
+<td>bus_account</td>
+<td>否</td>
+<td>string</td>
+<td>接待员账号</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回示例</strong></p>
+<table width='100%' class='codestyle'><pre><code>  {
+    "data": [
+        {
+            id:13304,
+            b_id:43433,
+            type:"储值余额",
+            money:42.5,
+            date:"2018-08-05",
+            bus_account:"ami4439002"
+        },
+        {
+            id:13304,
+            b_id:43433,
+            type:"储值余额",
+            money:42.5,
+            date:"2018-08-05",
+            bus_account:"ami4439002"
+        }
+    ],
+    "status": "0",
+    "message":""
+  }</code></pre></table>
+<p><strong>备注</strong></p></div><h2>3.1、会员账户管理</h2><div style="margin-left:20px;"><h3>3.1.1、修改登录密码</h3><div style="margin-left:30px;"><p><strong>请求URL：</strong></p>
+<ul>
+<li><code>./vipAccount/updateLoginpassword</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST</li>
+</ul>
+<p><strong>参数：</strong></p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th>字段名</th>
+<th>必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>account</td>
+<td>是</td>
+<td>string</td>
+<td>会员登录账号</td>
+</tr>
+<tr>
+<td>login_password</td>
+<td>是</td>
+<td>string</td>
+<td>登录密码</td>
+</tr>
+<tr>
+<td>confirm_password</td>
+<td>是</td>
+<td>string</td>
+<td>确认密码</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回参数说明：无</strong></p></div><h3>3.1.2、修改会员资料</h3><div style="margin-left:30px;"><p><strong>请求URL：</strong></p>
+<ul>
+<li><code>./vipAccount/updateAccount</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST</li>
+</ul>
+<p><strong>参数：</strong></p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th>字段名</th>
+<th>必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>是</td>
+<td>string</td>
+<td>姓名</td>
+</tr>
+<tr>
+<td>sex</td>
+<td>是</td>
+<td>string（男，女）</td>
+<td>性别</td>
+</tr>
+<tr>
+<td>phone</td>
+<td>是</td>
+<td>string</td>
+<td>电话</td>
+</tr>
+<tr>
+<td>address</td>
+<td>否</td>
+<td>string</td>
+<td>地址</td>
+</tr>
+<tr>
+<td>email</td>
+<td>是</td>
+<td>string</td>
+<td>邮箱</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回参数说明：无</strong></p></div><h3>3.1.3、修改消费密码</h3><div style="margin-left:30px;"><p><strong>请求URL：</strong></p>
+<ul>
+<li><code>./vipAccount/updateConsumepassword</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST</li>
+</ul>
+<p><strong>参数：</strong></p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th>字段名</th>
+<th>必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>account</td>
+<td>是</td>
+<td>string</td>
+<td>会员登录账号</td>
+</tr>
+<tr>
+<td>consume_password</td>
+<td>是</td>
+<td>string</td>
+<td>消费密码</td>
+</tr>
+<tr>
+<td>confirm_password</td>
+<td>是</td>
+<td>string</td>
+<td>确认密码</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回参数说明：无</strong></p></div></div><h2>3.2、会员消费点评</h2><div style="margin-left:20px;"><h3>3.2.1、获取当前会员未点评的消费</h3><div style="margin-left:30px;"><p><strong>请求URL：</strong></p>
+<ul>
+<li><code>./vipComment/getNonComment</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>GET</li>
+</ul>
+<p><strong>参数：无</strong></p>
+<p><strong>返回参数说明</strong></p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th>字段名</th>
+<th>必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>是</td>
+<td>int</td>
+<td>消费编号</td>
+</tr>
+<tr>
+<td>b_id</td>
+<td>是</td>
+<td>int</td>
+<td>商家编号</td>
+</tr>
+<tr>
+<td>type</td>
+<td>是</td>
+<td>string</td>
+<td>消费方式：现金，储值余额</td>
+</tr>
+<tr>
+<td>money</td>
+<td>是</td>
+<td>double</td>
+<td>消费金额</td>
+</tr>
+<tr>
+<td>date</td>
+<td>是</td>
+<td>date</td>
+<td>消费时间</td>
+</tr>
+<tr>
+<td>bus_account</td>
+<td>否</td>
+<td>string</td>
+<td>接待员账号</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回示例</strong></p>
+<table width='100%' class='codestyle'><pre><code>  {
+    "data": [
+        {
+            id:13304,
+            b_id:43433,
+            type:"储值余额",
+            money:42.5,
+            date:"2018-08-05",
+            bus_account:"ami4439002"
+        },
+        {
+            id:13304,
+            b_id:43433,
+            type:"储值余额",
+            money:42.5,
+            date:"2018-08-05",
+            bus_account:"ami4439002"
+        }
+    ],
+    "status": "0",
+    "message":""
+  }</code></pre></table>
+<p><strong>备注</strong></p></div><h3>3.2.2、会员点评消费</h3><div style="margin-left:30px;"><p><strong>请求URL：</strong></p>
+<ul>
+<li><code>./vipComment/addComment</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST</li>
+</ul>
+<p><strong>参数：</strong></p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th>字段名</th>
+<th>必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>c_id</td>
+<td>是</td>
+<td>int</td>
+<td>消费编号</td>
+</tr>
+<tr>
+<td>star</td>
+<td>是</td>
+<td>int(1,2,3,4,5)</td>
+<td>点评星级，仅限1到五的整数</td>
+</tr>
+<tr>
+<td>content</td>
+<td>否</td>
+<td>string</td>
+<td>点评内容</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回参数说明：无</strong></p></div></div></div><h1>4、七彩云信息展示功能</h1><div style="margin-left:20px;"><h2>4.1、查询行业商家</h2><div style="margin-left:20px;"><p><strong>请求URL：</strong></p>
+<ul>
+<li><code>./display/getBusinessByType</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>GET</li>
+</ul>
+<p><strong>参数：</strong></p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">type</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">string</td>
+<td>商家类型（行业），仅包括：娱乐，旅游，购物，交通，住宿，餐饮</td>
+</tr>
+<tr>
+<td style="text-align: left;">count</td>
+<td style="text-align: left;">否</td>
+<td style="text-align: left;">int</td>
+<td>商家条数（没有时默认为10）</td>
+</tr>
+<tr>
+<td style="text-align: left;">page</td>
+<td style="text-align: left;">否</td>
+<td style="text-align: left;">int</td>
+<td>页数（也有时默认显示第1页）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回参数说明：</strong></p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th>字段名</th>
+<th>必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>是</td>
+<td>int</td>
+<td>商家编号</td>
+</tr>
+<tr>
+<td>b_name</td>
+<td>是</td>
+<td>string</td>
+<td>商家名称</td>
+</tr>
+<tr>
+<td>type</td>
+<td>是</td>
+<td>string</td>
+<td>商家类型（行业），仅包括：娱乐，旅游，购物，交通，住宿，餐饮</td>
+</tr>
+<tr>
+<td>address</td>
+<td>是</td>
+<td>string（省+市+区+地址）</td>
+<td>商家地址</td>
+</tr>
+<tr>
+<td>b_picture</td>
+<td>否</td>
+<td>string</td>
+<td>商家图片路径</td>
+</tr>
+<tr>
+<td>b_telephone</td>
+<td>是</td>
+<td>string</td>
+<td>商家电话</td>
+</tr>
+<tr>
+<td>postcode</td>
+<td>否</td>
+<td>string</td>
+<td>邮政编码</td>
+</tr>
+<tr>
+<td>c_name</td>
+<td>是</td>
+<td>string</td>
+<td>联系人姓名</td>
+</tr>
+<tr>
+<td>c_gender</td>
+<td>是</td>
+<td>string</td>
+<td>联系人性别，仅包括：先生，女士</td>
+</tr>
+<tr>
+<td>c_position</td>
+<td>是</td>
+<td>string</td>
+<td>联系人职位</td>
+</tr>
+<tr>
+<td>c_telephone</td>
+<td>否</td>
+<td>string</td>
+<td>联系人电话</td>
+</tr>
+<tr>
+<td>c_cellphone</td>
+<td>否</td>
+<td>string</td>
+<td>联系人手机</td>
+</tr>
+<tr>
+<td>c_fax</td>
+<td>否</td>
+<td>string</td>
+<td>联系人传真</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回示例</strong></p>
+<table width='100%' class='codestyle'><pre><code>  {
+    "data": [
+        {
+            /*
+            *  business表对应字段
+            */
+        },
+        {...},
+        {...},
+        ...
+    ],
+    "status": "0",
+    "message":""
+  }</code></pre></table>
+<p><strong>备注：返回的商家信息已按 点评指数降序排序</strong></p></div><h2>4.2、获取商家的所有产品</h2><div style="margin-left:20px;"><p><strong>请求URL：</strong></p>
+<ul>
+<li><code>./display/getProductByBusId</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>GET</li>
+</ul>
+<p><strong>参数：</strong></p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th>字段名</th>
+<th>必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>是</td>
+<td>int</td>
+<td>商家编号</td>
+</tr>
+<tr>
+<td>count</td>
+<td>否</td>
+<td>int</td>
+<td>商家条数（没有时默认为10）</td>
+</tr>
+<tr>
+<td>page</td>
+<td>否</td>
+<td>int</td>
+<td>页数（也有时默认显示第1页）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回参数说明</strong></p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th>字段名</th>
+<th>必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>是</td>
+<td>int</td>
+<td>产品编号</td>
+</tr>
+<tr>
+<td>name</td>
+<td>是</td>
+<td>string</td>
+<td>产品名称</td>
+</tr>
+<tr>
+<td>price</td>
+<td>是</td>
+<td>double</td>
+<td>产品价格</td>
+</tr>
+<tr>
+<td>vip_price</td>
+<td>是</td>
+<td>double</td>
+<td>会员价格</td>
+</tr>
+<tr>
+<td>introduction</td>
+<td>否</td>
+<td>string</td>
+<td>产品介绍</td>
+</tr>
+<tr>
+<td>picture_path</td>
+<td>否</td>
+<td>string</td>
+<td>图片路径</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回示例</strong></p>
+<table width='100%' class='codestyle'><pre><code>  {
+    "data": [
+        {
+            /*
+            * product表对应字段
+            */
+        },
+        {...},
+        ...
+    ],
+    "status": "0",
+    "message":""
+  }</code></pre></table></div><h2>4.3、搜索商家</h2><div style="margin-left:20px;"><p><strong>请求URL：</strong></p>
+<ul>
+<li><code>./display/serarch</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>GET</li>
+</ul>
+<p><strong>参数：</strong></p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th>字段名</th>
+<th>必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>key</td>
+<td>否</td>
+<td>string</td>
+<td>关键词（没有时默认为空字符串""）</td>
+</tr>
+<tr>
+<td>count</td>
+<td>否</td>
+<td>int</td>
+<td>商家条数（没有时默认为10）</td>
+</tr>
+<tr>
+<td>page</td>
+<td>否</td>
+<td>int</td>
+<td>页数（也有时默认显示第1页）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回参数说明</strong></p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th>字段名</th>
+<th>必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>是</td>
+<td>int</td>
+<td>商家编号</td>
+</tr>
+<tr>
+<td>b_name</td>
+<td>是</td>
+<td>string</td>
+<td>商家名称</td>
+</tr>
+<tr>
+<td>type</td>
+<td>是</td>
+<td>string</td>
+<td>商家类型（行业），仅包括：娱乐，旅游，购物，交通，住宿，餐饮</td>
+</tr>
+<tr>
+<td>address</td>
+<td>是</td>
+<td>string（省+市+区+地址）</td>
+<td>商家地址</td>
+</tr>
+<tr>
+<td>b_picture</td>
+<td>否</td>
+<td>string</td>
+<td>商家图片路径</td>
+</tr>
+<tr>
+<td>b_telephone</td>
+<td>是</td>
+<td>string</td>
+<td>商家电话</td>
+</tr>
+<tr>
+<td>postcode</td>
+<td>否</td>
+<td>string</td>
+<td>邮政编码</td>
+</tr>
+<tr>
+<td>c_name</td>
+<td>是</td>
+<td>string</td>
+<td>联系人姓名</td>
+</tr>
+<tr>
+<td>c_gender</td>
+<td>是</td>
+<td>string</td>
+<td>联系人性别，仅包括：先生，女士</td>
+</tr>
+<tr>
+<td>c_position</td>
+<td>是</td>
+<td>string</td>
+<td>联系人职位</td>
+</tr>
+<tr>
+<td>c_telephone</td>
+<td>否</td>
+<td>string</td>
+<td>联系人电话</td>
+</tr>
+<tr>
+<td>c_cellphone</td>
+<td>否</td>
+<td>string</td>
+<td>联系人手机</td>
+</tr>
+<tr>
+<td>c_fax</td>
+<td>否</td>
+<td>string</td>
+<td>联系人传真</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回示例</strong></p>
+<table width='100%' class='codestyle'><pre><code>  {
+    "data": [
+        {
+            /*
+            * business表对应字段
+            */
+        },
+        {...},
+        ...
+    ],
+    "status": "0",
+    "message":""
+  }</code></pre></table></div><h2>4.4、获取商家的所有点评</h2><div style="margin-left:20px;"><p><strong>请求URL：</strong></p>
+<ul>
+<li><code>./display/getCommentByBusId</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>GET</li>
+</ul>
+<p><strong>参数：</strong></p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">int</td>
+<td>商家编号</td>
+</tr>
+<tr>
+<td style="text-align: left;">count</td>
+<td style="text-align: left;">否</td>
+<td style="text-align: left;">int</td>
+<td>商家条数（没有时默认为10）</td>
+</tr>
+<tr>
+<td style="text-align: left;">page</td>
+<td style="text-align: left;">否</td>
+<td style="text-align: left;">int</td>
+<td>页数（也有时默认显示第1页）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回参数说明</strong></p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">int</td>
+<td>点评编号</td>
+</tr>
+<tr>
+<td style="text-align: left;">c_id</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">int</td>
+<td>消费编号</td>
+</tr>
+<tr>
+<td style="text-align: left;">star</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">int(1,2,3,4,5)</td>
+<td>点评星级，仅限1到五的整数</td>
+</tr>
+<tr>
+<td style="text-align: left;">content</td>
+<td style="text-align: left;">否</td>
+<td style="text-align: left;">string</td>
+<td>点评内容</td>
+</tr>
+<tr>
+<td style="text-align: left;">date</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">date</td>
+<td>点评日期时间</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回示例</strong></p>
+<table width='100%' class='codestyle'><pre><code>  {
+    "data": [
+        {
+            /*
+            * comment表对应字段
+            */
+        },
+        {...},
+        ...
+    ],
+    "status": "0",
+    "message":""
+  }</code></pre></table></div></div><h1>5、七彩云综合管理</h1><div style="margin-left:20px;"><h2>5.1、操作商家状态</h2><div style="margin-left:20px;"><p><strong>请求URL：</strong></p>
+<ul>
+<li><code>./system/operateBussinessStatus</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST</li>
+</ul>
+<p><strong>参数：</strong></p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th style="text-align: left;">参数名</th>
+<th style="text-align: left;">必选</th>
+<th style="text-align: left;">类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">id</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">int</td>
+<td>商家编号</td>
+</tr>
+<tr>
+<td style="text-align: left;">status</td>
+<td style="text-align: left;">是</td>
+<td style="text-align: left;">int</td>
+<td>商家状态，0：禁用 1：启用</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回参数说明：无</strong></p></div><h2>5.2、查询所有待审核商家</h2><div style="margin-left:20px;"><p><strong>请求URL：</strong></p>
+<ul>
+<li><code>./system/getToExamine</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>GET</li>
+</ul>
+<p><strong>参数：无</strong></p>
+<p><strong>返回参数说明</strong></p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th>字段名</th>
+<th>必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>是</td>
+<td>int</td>
+<td>商家编号</td>
+</tr>
+<tr>
+<td>b_name</td>
+<td>是</td>
+<td>string</td>
+<td>商家名称</td>
+</tr>
+<tr>
+<td>type</td>
+<td>是</td>
+<td>string</td>
+<td>商家类型（行业），仅包括：娱乐，旅游，购物，交通，住宿，餐饮</td>
+</tr>
+<tr>
+<td>address</td>
+<td>是</td>
+<td>string（省+市+区+地址）</td>
+<td>商家地址</td>
+</tr>
+<tr>
+<td>b_telephone</td>
+<td>是</td>
+<td>string</td>
+<td>商家电话</td>
+</tr>
+<tr>
+<td>postcode</td>
+<td>否</td>
+<td>string</td>
+<td>邮政编码</td>
+</tr>
+<tr>
+<td>c_name</td>
+<td>是</td>
+<td>string</td>
+<td>联系人姓名</td>
+</tr>
+<tr>
+<td>c_gender</td>
+<td>是</td>
+<td>string</td>
+<td>联系人性别，仅包括：先生，女士</td>
+</tr>
+<tr>
+<td>c_position</td>
+<td>是</td>
+<td>string</td>
+<td>联系人职位</td>
+</tr>
+<tr>
+<td>c_telephone</td>
+<td>否</td>
+<td>string</td>
+<td>联系人电话</td>
+</tr>
+<tr>
+<td>c_cellphone</td>
+<td>否</td>
+<td>string</td>
+<td>联系人手机</td>
+</tr>
+<tr>
+<td>c_fax</td>
+<td>否</td>
+<td>string</td>
+<td>联系人传真</td>
+</tr>
+<tr>
+<td>c_mail</td>
+<td>是</td>
+<td>string</td>
+<td>联系人邮箱</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回示例</strong></p>
+<table width='100%' class='codestyle'><pre><code>  {
+    "data":[
+        {
+            /*
+            * business表对应字段
+            */
+        },
+        {...},
+        ...
+    ],
+    "status": "0",
+    "message":""
+  }</code></pre></table></div><h2>5.3、操作审核结果</h2><div style="margin-left:20px;"><p><strong>请求URL：</strong></p>
+<ul>
+<li><code>./system/operateExamine</code></li>
+</ul>
+<p><strong>请求方式：</strong></p>
+<ul>
+<li>POST</li>
+</ul>
+<p><strong>参数：</strong></p>
+<table>
+<thead><tr style='background-color: rgb(0, 136, 204); color: rgb(255, 255, 255);'>
+<th>字段名</th>
+<th>必选</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>是</td>
+<td>int</td>
+<td>商家编号</td>
+</tr>
+<tr>
+<td>status</td>
+<td>是</td>
+<td>int(0,1)</td>
+<td>审核结果 0：未通过 1：通过</td>
+</tr>
+</tbody>
+</table>
+<p><strong>返回参数说明：无</strong></p>
+<p><strong>备注：执行该接口操作后，后端需邮件发送审核结果。若结果为 未通过，后端在数据库中删除该商家信息。</strong></p></div></div></body></html>
