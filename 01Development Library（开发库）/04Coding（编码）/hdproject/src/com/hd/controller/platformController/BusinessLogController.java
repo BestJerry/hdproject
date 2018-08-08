@@ -1,9 +1,7 @@
 package com.hd.controller.platformController;
-import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Date;
 import java.util.Properties;
-import java.util.Random;
 
 import javax.mail.Authenticator;
 import javax.mail.Message;
@@ -14,9 +12,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
-import org.apache.ibatis.annotations.ResultMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSON;
 import com.hd.general.Response;
 import com.hd.general.Str2MD5;
-import com.hd.mapper.platform.businesslog.AccountMapper;
+import com.hd.mapper.platform.businesslog.BccountMapper;
 import com.hd.mapper.platform.businesslog.ResetPasswordMapper;
 import com.hd.pojo.Account;
 import com.hd.pojo.Reset_password;
@@ -36,7 +32,7 @@ import com.hd.pojo.Reset_password;
 public class BusinessLogController {
 		
 		@Autowired
-		AccountMapper accountMapper;
+		BccountMapper accountMapper;
 		
 		@Autowired
 		ResetPasswordMapper resetPasswordMapper;
