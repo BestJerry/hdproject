@@ -1,0 +1,13 @@
+package com.hd.mapper.systemManagerMapper;
+
+import java.util.List;
+
+import com.hd.pojo.Business;
+
+public interface SystemManagerMapper {
+	
+	public List<Business> getAllToExamine(int count,int page);
+	
+	public int updateBusinessStatus(int id,String status);
+	
+}
