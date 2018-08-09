@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.alibaba.fastjson.JSON;
 import com.hd.general.Response;
 
 /**
@@ -25,12 +26,13 @@ public class GlobalExceptionHandler implements HandlerExceptionResolver {
 		
 		try {
 			PrintWriter out = response.getWriter();
-			if(exception instanceof NumberFormatException ) {
-				out.print(new Response(null,"1","数据格式错误！"));
-			} else if(exception instanceof SQLException) {
-				out.print(new Response(null,"2","数据库操作出错！"));
+			if(exception instanceof NumberFormatException || exception instanceof IllegalStateException
+					|| exception instanceof NullPointerException) {
+				out.print(JSON.toJSON(new Response(null,"1","数据格式错误！")));
+			} else if(exception instanceof SQLException || exception instanceof com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException) {
+				out.print(JSON.toJSON(new Response(null,"2","数据库操作出错！")));
 			} else {
-				out.print(new Response(null,"3","未知错误！"));
+				out.print(JSON.toJSON(new Response(null,"3","未知错误！")));
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
