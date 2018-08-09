@@ -34,7 +34,7 @@ public class GeneralController {
         // 获取绘图工具
         Graphics graphics = bi.getGraphics();
         graphics.setColor(new Color(100, 230, 200)); // 使用RGB设置背景颜色
-        graphics.fillRect(0, 0, 100, 30); // 填充矩形区域
+        graphics.fillRect(0, 0, IMG_HEIGHT, IMG_WIDTH ); // 填充矩形区域
 
         // 验证码中所使用到的字符
         char[] codeChar = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456".toCharArray();

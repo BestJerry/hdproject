@@ -45,6 +45,10 @@
 	    	select id,vip_account,money,date,bus_account from recharge_history join account 
 	    		on recharge_history.bus_account = account.account where b_id=#{b_id}
 	    </select>
+	    
+	    <delete id="deleteProductById">
+	    	delete from product where id=#{id}
+	    </delete>
 	        
 	</mapper>
 
