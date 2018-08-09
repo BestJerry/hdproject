@@ -24,8 +24,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.hd.general.Response;
+import com.hd.general.Str2MD5;
 import com.hd.mapper.vipmanage.VipManageMapper;
 import com.hd.pojo.Account;
 import com.hd.pojo.Consumption;
@@ -50,7 +52,7 @@ public class VipManageController {
 	@RequestMapping(value = "/consume")
 	@ResponseBody // 声明将返回的对象转换成json格式
 	@Transactional(rollbackFor = Exception.class) // 声明事务，发生异常时回滚
-	public Object vipConsume(String id, String type, double money, HttpServletRequest request,
+	public String vipConsume(String id, String type, double money, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 
 		mapper.vipConsume(id, money);
@@ -72,11 +74,11 @@ public class VipManageController {
 		
 		mapper.insertConsume(consumption);
 
-		return null;
+		return JSON.toJSONString(new Response(null,"0",""));
 
 	}
 
-	@RequestMapping(value = "/addVip",method = RequestMethod.POST)
+	@RequestMapping(value = "/addVip")
 	@ResponseBody // 声明将返回的对象转换成json格式
 	@Transactional(rollbackFor = Exception.class) // 声明事务，发生异常时回滚
 	public Object addVip(String name, String sex, String phone, String address, String email,
@@ -99,8 +101,8 @@ public class VipManageController {
 
 		Vip vip = new Vip();
 		vip.setAccount(account);
-		vip.setLogin_password(phone);
-		vip.setConsume_password(phone);
+		vip.setLogin_password(Str2MD5.MD5(phone));
+		vip.setConsume_password(Str2MD5.MD5(phone));
 		vip.setCard_id(vipcard.getId());
 		vip.setName(name);
 		vip.setSex(sex);
@@ -121,7 +123,7 @@ public class VipManageController {
 	@RequestMapping(value = "/recharge")
 	@ResponseBody // 声明将返回的对象转换成json格式
 	@Transactional(rollbackFor = Exception.class) // 声明事务，发生异常时回滚
-	public Object recharge(String id, double money, HttpServletRequest request, HttpServletResponse response)
+	public String recharge(String id, double money, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 
 		System.out.println(id + " " + money);
@@ -140,7 +142,7 @@ public class VipManageController {
 
 		mapper.recordRecharge(recharge_history);
 
-		return "???";
+		return JSON.toJSONString(new Response(null,"0",""));
 
 	}
 
