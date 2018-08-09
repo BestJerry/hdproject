@@ -25,5 +25,4 @@
 		<update id="updateAccountByBusId">
 			update account set state=0 where b_id=#{id}
 		</update>
-		
 	</mapper>
