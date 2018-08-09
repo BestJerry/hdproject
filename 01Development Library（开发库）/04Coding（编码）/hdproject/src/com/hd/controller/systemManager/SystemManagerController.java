@@ -70,10 +70,11 @@ public class SystemManagerController {
 		if(status == 1){
 			
 			String account = getAccount(),messageText;
-			messageText = "账号:" + account + "\n密码:" + account;
+			messageText = "您的七彩云加盟注册已审核通过\n账号:" + account + "\n密码:" + account;
 			//创建商家管理员账号并启用
 			Account bus_account = new Account(account, account, id, 1, 1);
 			accountMapper.addAccount(bus_account);
+			mapper.updateBusinessStatus(id, "启用");
 			Email.sendMail(toEmail, "845119166@qq.com", "七彩云商家注册审核结果", messageText);
 		}else {
 			Email.sendMail(toEmail, "845119166@qq.com", "七彩云商家注册审核结果", "审核未通过");

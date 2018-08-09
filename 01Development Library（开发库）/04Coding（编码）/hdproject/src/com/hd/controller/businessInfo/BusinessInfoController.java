@@ -68,4 +68,12 @@ public class BusinessInfoController {
 		return mapper.getAllProductByB_id(account.getB_id(),tcount,tpage);
 	}
 	
+	@RequestMapping("/deleteProduct")
+	@ResponseBody
+	@Transactional(rollbackFor=Exception.class)
+	public String deleteProduct(int id) {
+		mapper.deleteProductById(id);
+		return JSON.toJSONString(new Response(null,"0",""));
+	}
+	
 }

@@ -25,4 +25,6 @@ public interface BusinessInfoMapper {
 	
 	public List<Recharge_history> getAllRecharge_historyByB_id(int b_id);
 	
+	public int deleteProductById(int id);
+	
 }
