@@ -110,7 +110,7 @@ public class AccountController {
       	HttpSession session=request.getSession();
       	Account acc=(Account)session.getAttribute("account");
       	int b_id=acc.getB_id();
-      	Account sonAccount=new Account(account, Str2MD5.MD5(password), b_id, t_account_type, t_state);
+      	Account sonAccount=new Account(account, password, b_id, t_account_type, t_state);
       	accountMapper.addAccount(sonAccount);
       
       	Map<String, Object> returnMap=new HashMap<String, Object>();
