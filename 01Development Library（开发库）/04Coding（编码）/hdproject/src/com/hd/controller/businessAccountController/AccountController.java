@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.hd.general.Response;
+import com.hd.general.Str2MD5;
 import com.hd.mapper.businessAccountMapper.AccountMapper;
 import com.hd.pojo.Account;
 import com.sun.mail.handlers.image_gif;
@@ -102,14 +103,14 @@ public class AccountController {
 		int t_state=1;//默认可用
 		if(state!=null) {t_state=state;}
 		String account=getAccount();
-      	while(accountMapper.selectAccountById(account)==null){
+      	while(accountMapper.selectAccountById(account)!=null){
       		account=getAccount();
       	}
       	String password=account;//初始密码
       	HttpSession session=request.getSession();
       	Account acc=(Account)session.getAttribute("account");
       	int b_id=acc.getB_id();
-      	Account sonAccount=new Account(account, password, b_id, t_account_type, t_state);
+      	Account sonAccount=new Account(account, Str2MD5.MD5(password), b_id, t_account_type, t_state);
       	accountMapper.addAccount(sonAccount);
       
       	Map<String, Object> returnMap=new HashMap<String, Object>();
