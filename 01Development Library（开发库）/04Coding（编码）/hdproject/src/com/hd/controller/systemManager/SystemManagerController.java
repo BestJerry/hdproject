@@ -50,6 +50,9 @@ public class SystemManagerController {
 	public String operateBusinessStatus(int id,int status) {
 		String tStatus = status==0?"½ûÓÃ":"ÆôÓÃ";
 		mapper.updateBusinessStatus(id,tStatus);
+		if(status == 0) {
+			mapper.updateAccountByBusId(id);
+		}
 		return JSON.toJSONString(new Response(null,"0",""));
 	}
 	

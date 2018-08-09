@@ -21,4 +21,9 @@
 		<select id="getEmail" parameterType="java.lang.Integer" resultType="java.lang.String">
 			select c_mail from business where id = #{id,jdbcType=INTEGER}
 		</select>
+		
+		<update id="updateAccountByBusId">
+			update account set state=0 where b_id=#{id}
+		</update>
+		
 	</mapper>
