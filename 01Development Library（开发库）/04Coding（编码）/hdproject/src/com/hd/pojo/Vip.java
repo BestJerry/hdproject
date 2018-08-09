@@ -112,7 +112,7 @@ public class Vip {
 		String RULE_EMAIL = "^\\w+((-\\w+)|(\\.\\w+))*\\@[A-Za-z0-9]+((\\.|-)[A-Za-z0-9]+)*\\.[A-Za-z0-9]+$";
         Pattern p = Pattern.compile(RULE_EMAIL);//正则表达式的模式
         Matcher m = p.matcher(email);//正则表达式的匹配器
-        if(!m.matches()) throw new Exception();
+        if(!m.matches()) throw new Exception("邮箱格式不正确");
 		this.email = email;
 	}
 	
