@@ -10,4 +10,9 @@ public interface SystemManagerMapper {
 	
 	public int updateBusinessStatus(int id,String status);
 	
+	public int deleteBusiness(int id);
+	
+	public String getEmail(int id);
+	
+	public int updateAccountByBusId(int id);
 }

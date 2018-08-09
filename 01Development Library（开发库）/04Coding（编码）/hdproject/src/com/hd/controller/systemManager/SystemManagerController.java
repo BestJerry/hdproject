@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
+import com.hd.general.Email;
 import com.hd.general.Response;
+import com.hd.mapper.businessInfoMapper.BusinessInfoMapper;
 import com.hd.mapper.systemManagerMapper.SystemManagerMapper;
 import com.hd.pojo.Business;
 
@@ -48,7 +50,22 @@ public class SystemManagerController {
 	public String operateBusinessStatus(int id,int status) {
 		String tStatus = status==0?"禁用":"启用";
 		mapper.updateBusinessStatus(id,tStatus);
+		if(status == 0) {
+			mapper.updateAccountByBusId(id);
+		}
 		return JSON.toJSONString(new Response(null,"0",""));
 	}
 	
+	@RequestMapping("/operateExamine")
+	@ResponseBody
+	@Transactional(rollbackFor=Exception.class)
+	public String operateExamine(int id,int status){
+		if(status == 1){
+			String toEmail = mapper.getEmail(id);
+			Email.sendMail(toEmail, "845119166@qq.com", "七彩云商家注册审核结果", "已通过");
+		}else {
+			mapper.deleteBusiness(id);
+		}
+		return JSON.toJSONString(new Response(null,"0",""));
+	}
 }

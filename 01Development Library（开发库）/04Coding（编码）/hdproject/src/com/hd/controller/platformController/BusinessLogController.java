@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
+import com.hd.general.Email;
 import com.hd.general.Response;
 import com.hd.general.Str2MD5;
 import com.hd.mapper.platform.businesslog.BccountMapper;
@@ -91,7 +92,7 @@ public class BusinessLogController {
 			messageText = " 点击下方链接进入到重置密码页面：\n " +
 					"http://127.0.0.1:8080/hdproject/businessLog/confirmToken?account=" + account + "&token=" + token;
 			//messageText = "http://127.0.0.1:8080/hdproject/businessLog/login?account=123&password=123&verificationCode=123";
-			sendMail(to, from, title, messageText);
+			Email.sendMail(to, from, title, messageText);
 			return 0;
 		}
 		
@@ -118,7 +119,7 @@ public class BusinessLogController {
 		@RequestMapping("/logout")
 		@ResponseBody
 		public String logout(HttpServletRequest request){
-			request.getSession().removeAttribute("account");
+			request.getSession().invalidate();
 			return JSON.toJSONString(new Response(null,"0",""));
 		}
 		
@@ -159,50 +160,6 @@ public class BusinessLogController {
 			else return true;
 		}
 		
-		private void sendMail(String to,String from,String title,String messageText){
-		    //授权码 
-			String authorizationCode = "lmwuqyzrogahbfgd";
-		      
-		      // 指定发送邮件的主机为 smtp.qq.com
-		      String host = "smtp.qq.com";  //QQ 邮件服务器
-		 
-		      // 获取系统属性
-		      Properties properties = System.getProperties();
-		 
-		      // 设置邮件服务器
-		      properties.setProperty("mail.smtp.host", host);
-		 
-		      properties.put("mail.smtp.auth", "true");
-		      // 获取默认session对象
-		      Session session = Session.getDefaultInstance(properties,new Authenticator(){
-		        public PasswordAuthentication getPasswordAuthentication()
-		        {
-		         return new PasswordAuthentication(from, authorizationCode); //发件人邮件用户名、授权码
-		        }
-		       });
-		 
-		      try{
-		         // 创建默认的 MimeMessage 对象
-		         MimeMessage message = new MimeMessage(session);
-		 
-		         // Set From: 头部头字段
-		         message.setFrom(new InternetAddress(from));
-		 
-		         // Set To: 头部头字段
-		         message.addRecipient(Message.RecipientType.TO,
-		                                  new InternetAddress(to));
-		 
-		         // Set Subject: 头部头字段
-		         message.setSubject(title);
-		 
-		         // 设置消息体
-		         message.setText(messageText);
-		 
-		         // 发送消息
-		         Transport.send(message);
-		      }catch (MessagingException mex) {
-		         mex.printStackTrace();
-		      }
-		}
+		
 
 }
