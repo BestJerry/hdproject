@@ -29,7 +29,7 @@ public class VipController {
 	@RequestMapping("/login")
 	@ResponseBody
 	public int login(String account,String login_password,String verificationCode,HttpServletRequest request){
-		String verify = "123";//(String)request.getSession().getAttribute("verificationCode");
+		String verify = (String)request.getSession().getAttribute("verificationCode");
 		verify = verify.toLowerCase();
 		verificationCode = verificationCode.toLowerCase();
 		if(!verify.equals(verificationCode))
@@ -65,7 +65,7 @@ public class VipController {
 	@RequestMapping("/logout")
 	@ResponseBody
 	public String logout(HttpServletRequest request){
-		request.getSession().removeAttribute("vip");
+		request.getSession().invalidate();
 		return JSON.toJSONString(new Response(null,"0",""));
 	}
 }

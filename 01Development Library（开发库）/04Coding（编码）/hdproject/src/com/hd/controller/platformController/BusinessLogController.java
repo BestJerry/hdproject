@@ -118,7 +118,7 @@ public class BusinessLogController {
 		@RequestMapping("/logout")
 		@ResponseBody
 		public String logout(HttpServletRequest request){
-			request.getSession().removeAttribute("account");
+			request.getSession().invalidate();
 			return JSON.toJSONString(new Response(null,"0",""));
 		}
 		
