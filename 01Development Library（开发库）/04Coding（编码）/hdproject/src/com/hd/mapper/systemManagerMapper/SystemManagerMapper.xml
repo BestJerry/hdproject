@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+	<mapper namespace="com.hd.mapper.systemManagerMapper.SystemManagerMapper">
+	
+		<select id="getAllToExamine" resultType="Business">
+			select id,b_name,type,address,b_telephone,postcode,c_name,c_gender,c_position,c_telephone,c_cellphone,
+				c_fax,c_mail from business where status = '审核' limit #{arg1},#{arg0}
+		</select>
+		
+		<update id="updateBusinessStatus">
+			update business set status = #{arg1} where id = #{arg0}
+		</update>
+		
+	</mapper>
