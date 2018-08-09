@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 import com.hd.general.Response;
-import com.hd.mapper.UserMapper;
 import com.hd.mapper.vipmanage.VipManageMapper;
 import com.hd.pojo.Account;
 import com.hd.pojo.Consumption;
