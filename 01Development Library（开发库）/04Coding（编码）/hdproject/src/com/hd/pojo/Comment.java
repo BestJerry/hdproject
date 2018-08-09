@@ -10,18 +10,18 @@ public class Comment {
 	
 	private int star;
 	
-	private String text;
+	private String content;
 	
 	private Date date;
 	
 	public Comment(){super();}
 
-	public Comment(int id, int c_id, int star, String text, Date date) {
+	public Comment(int id, int c_id, int star, String content, Date date) {
 		super();
 		this.id = id;
 		this.c_id = c_id;
 		this.star = star;
-		this.text = text;
+		this.content = content;
 		this.date = date;
 	}
 
@@ -50,12 +50,12 @@ public class Comment {
 		this.star = star;
 	}
 
-	public String getText() {
-		return text;
+	public String getContent() {
+		return content;
 	}
 
-	public void setText(String text) {
-		this.text = text;
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 	public Date getDate() {
