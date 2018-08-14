@@ -76,4 +76,10 @@ public class BusinessInfoController {
 		return JSON.toJSONString(new Response(null,"0",""));
 	}
 	
+	@RequestMapping("/getNumberOfProduct")
+	@ResponseBody
+	public int getNumberOfProduct(HttpServletRequest request){
+		Account account = (Account)request.getSession().getAttribute("account");
+		return mapper.getNumberOfProduct(account.getB_id());
+	}
 }

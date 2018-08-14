@@ -11,4 +11,5 @@ public interface VipCommentMapper {
 	
 	public int addComment(Comment comment);
 	
+	public int getNumberOfNonComment(String vip_account);
 }

@@ -27,4 +27,5 @@ public interface BusinessInfoMapper {
 	
 	public int deleteProductById(int id);
 	
+	public int getNumberOfProduct(int b_id);
 }

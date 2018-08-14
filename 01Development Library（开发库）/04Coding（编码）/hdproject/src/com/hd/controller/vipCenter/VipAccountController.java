@@ -16,7 +16,7 @@ import com.hd.pojo.Vip;
 
 @RequestMapping("/vipAccount")
 @Controller
-public class VipAccount {
+public class VipAccountController {
 	@Autowired
 	VipMapper vipMapper;
 	

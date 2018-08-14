@@ -14,6 +14,7 @@ import com.hd.general.Response;
 import com.hd.general.Str2MD5;
 import com.hd.mapper.vipCenter.consumption.ConsumptionMapper;
 import com.hd.mapper.vipCenter.vip.VipMapper;
+import com.hd.pojo.Account;
 import com.hd.pojo.Consumption;
 import com.hd.pojo.Vip;
 
@@ -34,7 +35,7 @@ public class VipController {
 		verificationCode = verificationCode.toLowerCase();
 		if(!verify.equals(verificationCode))
 			return 2;
-		
+		request.getSession().getAttribute("verificationCode");
 		Vip vip = vipMapper.selectByPrimaryKey(account);
 		
 		if(vip == null) 
@@ -67,5 +68,12 @@ public class VipController {
 	public String logout(HttpServletRequest request){
 		request.getSession().invalidate();
 		return JSON.toJSONString(new Response(null,"0",""));
+	}
+	
+	@RequestMapping("/getNumberOfConsumption")
+	@ResponseBody
+	public int getNumberOfConsumption(HttpServletRequest request){
+		Vip vip = (Vip)request.getSession().getAttribute("vip");
+		return consumptionMapper.getNumberOfConsumption(vip.getAccount());
 	}
 }

@@ -15,4 +15,6 @@ public interface SystemManagerMapper {
 	public String getEmail(int id);
 	
 	public int updateAccountByBusId(int id);
+
+	public int getNumberOfToExamine();
 }

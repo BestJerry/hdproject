@@ -66,6 +66,7 @@ public class BusinessLogController {
 			if(!verifyCode(verify, verificationCode)){
 				return 1;
 			}
+			request.getSession().removeAttribute("verificationCode");
 			//不可用账号密码不可改
 			Account bus_account = accountMapper.selectUseableAccount(account);
 			if(bus_account == null)
@@ -102,7 +103,7 @@ public class BusinessLogController {
 			String verify = (String)request.getSession().getAttribute("verificationCode");
 			if(!verifyCode(verify, verificationCode))
 				return 2;
-			
+			request.getSession().removeAttribute("verificationCode");
 			Account bus_account = accountMapper.selectUseableAccount(account);
 			
 			if(bus_account == null) 

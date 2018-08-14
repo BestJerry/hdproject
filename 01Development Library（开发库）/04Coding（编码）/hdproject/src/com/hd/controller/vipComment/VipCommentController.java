@@ -43,4 +43,10 @@ public class VipCommentController {
 		return JSON.toJSONString(new Response(null,"0",""));
 	}
 	
+	@RequestMapping("/getNumberOfNonComment")
+	@ResponseBody
+	public int getNumberOfNonComment(HttpServletRequest request){
+		Vip vip = (Vip)request.getSession().getAttribute("vip");
+		return mapper.getNumberOfNonComment(vip.getAccount());
+	}
 }

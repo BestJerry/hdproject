@@ -14,4 +14,7 @@
 			insert into comment (c_id,star,content,date) values (#{c_id},#{star},#{content},#{date})
 		</insert>
 		
+		<select id="getNumberOfNonComment" parameterType="String" resultType="int">
+	    	select count(id) from consumption where vip_account=#{vip_account} and has_comment=0
+	    </select>
 	</mapper>

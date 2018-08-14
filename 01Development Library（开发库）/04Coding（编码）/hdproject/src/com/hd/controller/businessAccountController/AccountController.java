@@ -120,6 +120,13 @@ public class AccountController {
         return jsonString;
 	} 
 	
+	@RequestMapping("/getNumberOfAccount")
+	@ResponseBody
+	public int getNumeberOfAccount(HttpServletRequest request){
+		Account account = (Account)request.getSession().getAttribute("account");
+		return accountMapper.getNumeberOfAccount(account.getB_id());
+	}
+	
 	public String getAccount(){
 		//ÀÊª˙∑÷≈‰’À∫≈
 		String account="";

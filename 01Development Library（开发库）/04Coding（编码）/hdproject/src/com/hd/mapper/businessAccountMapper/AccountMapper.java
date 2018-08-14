@@ -11,5 +11,5 @@ public interface AccountMapper {
      public int addAccount(Account account);//添加子账号
      public Account selectAccountById(String account);//查找子账号
      public List<Account> selectAccounts(int b_id,int begin,int size);//获取所有子账号
-	 
+	 public int getNumeberOfAccount(int b_id);//获取子帐号的数量
 }

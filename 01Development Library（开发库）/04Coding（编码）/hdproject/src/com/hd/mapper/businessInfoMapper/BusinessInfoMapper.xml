@@ -50,5 +50,8 @@
 	    	delete from product where id=#{id}
 	    </delete>
 	        
+	    <select id="getNumberOfProduct" parameterType="int" resultType="int">
+	    	select count(id) from product where b_id=#{b_id}
+	    </select>
 	</mapper>
 

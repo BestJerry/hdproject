@@ -19,4 +19,6 @@ public interface ConsumptionMapper {
     int updateByPrimaryKey(Consumption record);
     
     List<Consumption> selectConsumptions(String account,int start,int count);
+    
+    public int getNumberOfConsumption(String vip_account);
 }

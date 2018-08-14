@@ -25,4 +25,8 @@
 		<update id="updateAccountByBusId">
 			update account set state=0 where b_id=#{id}
 		</update>
+		
+		<select id="getNumberOfToExamine" resultType="int">
+	    	select count(id) from business where status = '审核'
+	    </select>
 	</mapper>
