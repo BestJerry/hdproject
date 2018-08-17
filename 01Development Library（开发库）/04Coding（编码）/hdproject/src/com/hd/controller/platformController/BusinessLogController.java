@@ -1,6 +1,10 @@
 package com.hd.controller.platformController;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.Properties;
 
 import javax.mail.Authenticator;
@@ -31,7 +35,6 @@ import com.hd.pojo.Reset_password;
 @Controller
 @RequestMapping("/businessLog")
 public class BusinessLogController {
-		
 		@Autowired
 		BccountMapper accountMapper;
 		
@@ -61,7 +64,7 @@ public class BusinessLogController {
 		@RequestMapping("/forgetPassword")
 		@ResponseBody
 		@Transactional(rollbackFor=Exception.class)
-		public int forgetPassword(String account,String verificationCode,HttpServletRequest request) throws UnknownHostException{
+		public int forgetPassword(String account,String verificationCode,HttpServletRequest request) throws Exception{
 			String verify = (String)request.getSession().getAttribute("verificationCode");
 			if(!verifyCode(verify, verificationCode)){
 				return 1;
@@ -89,10 +92,13 @@ public class BusinessLogController {
 				record.setOverdate(overdate);
 				resetPasswordMapper.update(record);
 			}
-				
-			messageText = " 点击下方链接进入到重置密码页面：\n " +
-					"http://127.0.0.1:8080/hdproject/businessLog/confirmToken?account=" + account + "&token=" + token;
-			//messageText = "http://127.0.0.1:8080/hdproject/businessLog/login?account=123&password=123&verificationCode=123";
+			
+			String address = getHostIp();
+			//messageText = " 点击下方链接进入到重置密码页面：\n http://" + address + "/hdproject/businessLog/confirmToken?account=" + account + "&token=" + token + "&password=456&confirmPassword=456";
+			
+			
+			messageText = " 点击下方链接进入到重置密码页面：\n http://" + address + ":8080/hdproject/function/forgetpassword.html?account=" + account + "&token=" + token;
+			
 			Email.sendMail(to, from, title, messageText);
 			return 0;
 		}
@@ -132,9 +138,9 @@ public class BusinessLogController {
 			if(!password.equals(confirmPassword))
 				return 1;
 			if(record == null)
-				throw new Exception("账号不存在或链接已过期");
+				return 1;//账号不存在或链接失效
 			else if(record.getOverdate().before(new Date(System.currentTimeMillis()))){
-				//过期
+				//删除之前过期的令牌
 				resetPasswordMapper.delete(account);
 				return 1;
 			}else if(!token.equals(record.getToken())){
@@ -151,8 +157,30 @@ public class BusinessLogController {
 			return 0;
 		}
 		
+	private static String getHostIp() throws Exception {
+		Enumeration<NetworkInterface> allNetInterfaces = NetworkInterface.getNetworkInterfaces();
+		while (allNetInterfaces.hasMoreElements()) {
+			NetworkInterface netInterface = (NetworkInterface) allNetInterfaces.nextElement();
+			Enumeration<InetAddress> addresses = netInterface.getInetAddresses();
+			while (addresses.hasMoreElements()) {
+				InetAddress ip = (InetAddress) addresses.nextElement();
+				if (ip != null && ip instanceof InetAddress && !ip.isLoopbackAddress() // loopback地址即本机地址，IPv4的loopback范围是127.0.0.0
+						&& ip.getHostAddress().indexOf(":") == -1 && !ip.isSiteLocalAddress()) {
+					return ip.getHostAddress();
+				}
+			}
+		}
+		return null;
+	}
 		
-		
+		public static void main(String[] args) {
+			try {
+				getHostIp();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		private boolean verifyCode(String verify1,String verify2){
 			verify1 = verify1.toLowerCase();
 			verify2 = verify2.toLowerCase();
