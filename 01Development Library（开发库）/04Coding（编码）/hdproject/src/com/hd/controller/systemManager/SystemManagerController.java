@@ -37,8 +37,9 @@ public class SystemManagerController {
 	
 	@RequestMapping("/login")
 	@ResponseBody
-	public String login(String account,String password) {
+	public String login(String account,String password,HttpServletRequest request) {
 		if(account != null && password != null && account.equals(LOGIN_ACCOUNT) && password.equals(LOGIN_PASSWORD)) {
+			request.getSession().setAttribute("sys_admin",0);
 			return JSON.toJSONString(new Response("0","0",""));
 		}
 		return JSON.toJSONString(new Response("1","0",""));
