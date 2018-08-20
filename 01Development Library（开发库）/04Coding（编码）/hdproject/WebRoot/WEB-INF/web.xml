@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
-  
-  <!-- 配置spring核心容器 -->
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>classpath:applicationContext.xml</param-value>
@@ -9,8 +7,6 @@
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
-  
-  <!-- 配置Log4j进行日志输出 -->
   <listener>
     <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
   </listener>
@@ -18,8 +14,6 @@
     <param-name>log4jConfigLocation</param-name>
     <param-value>classpath:Log4j.properties</param-value>
   </context-param>
-  
-  <!-- 配置springMVC核心控制器 -->
   <servlet>
     <servlet-name>dispatcherServlet</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -33,8 +27,6 @@
     <servlet-name>dispatcherServlet</servlet-name>
     <url-pattern>/</url-pattern>
   </servlet-mapping>
-  
-  <!-- UTF-8编码过滤器 -->
   <filter>
     <filter-name>characterEncodingFilter</filter-name>
     <filter-class>com.hd.filter.encodingFilter</filter-class>
@@ -44,7 +36,15 @@
     <url-pattern>/*</url-pattern>
   </filter-mapping>
   
-  <!-- 定义错误码跳转 -->
+  <filter>
+    <filter-name>PowerFilter</filter-name>
+    <filter-class>com.hd.filter.PowerFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>PowerFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
   <error-page>
     <error-code>400</error-code>
     <location>/WEB-INF/error/400.json</location>
@@ -53,5 +53,4 @@
     <error-code>404</error-code>
     <location>/WEB-INF/error/404.html</location>
   </error-page>
-  
 </web-app>
