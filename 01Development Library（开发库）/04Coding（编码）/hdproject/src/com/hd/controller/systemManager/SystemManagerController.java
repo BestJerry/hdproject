@@ -106,4 +106,20 @@ public class SystemManagerController {
       	}
       	return account;
 	}
+	
+	@RequestMapping("/getAllBusinessNonExamine")
+	@ResponseBody
+	public List<Business> getAllBusinessNonExamine(Integer page,Integer count) {
+		int tcount = 10, tpage = 1;
+		if(count != null) tcount = count;
+		if(page != null) tpage = page;
+		return mapper.getAllBusinessNonExamine(tcount, (tpage - 1)*tcount);
+	}
+	
+	@RequestMapping("/getNumberOfNonExamine")
+	@ResponseBody
+	public int getNumberOfNonExamine() {
+		return mapper.getNumberOfNonExamine();
+	}
+	
 }

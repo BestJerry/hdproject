@@ -29,4 +29,13 @@
 		<select id="getNumberOfToExamine" resultType="int">
 	    	select count(id) from business where status = '审核'
 	    </select>
+	    
+	    <select id="getAllBusinessNonExamine" resultType="Business">
+			select id,b_name,type,status,address,b_telephone,postcode,c_name,c_gender,c_position,c_telephone,c_cellphone,
+				c_fax,c_mail from business where status != '审核' limit #{arg1},#{arg0}
+		</select>
+		
+		<select id="getNumberOfNonExamine" resultType="int">
+	    	select count(id) from business where status != '审核'
+	    </select>
 	</mapper>

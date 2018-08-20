@@ -17,4 +17,8 @@ public interface SystemManagerMapper {
 	public int updateAccountByBusId(int id);
 
 	public int getNumberOfToExamine();
+	
+	public List<Business> getAllBusinessNonExamine(int count,int page);
+	
+	public int getNumberOfNonExamine();
 }
