@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.hd.pojo.Business;
 import com.hd.pojo.Comment;
+import com.hd.pojo.Comment_index;
 import com.hd.pojo.Product;
 
 public interface BusinessDisplayMapper {
@@ -15,5 +16,7 @@ public interface BusinessDisplayMapper {
 	public List<Business> searchBusinessByKey(String key,int count,int page);
 	
 	public List<Comment> getCommentByBusId(int id,int count,int page);
+	
+	public Comment_index getBusinessPoint(int id);
 	
 }
