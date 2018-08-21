@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.hd.mapper.businessDisplayMapper.BusinessDisplayMapper;
 import com.hd.pojo.Business;
 import com.hd.pojo.Comment;
+import com.hd.pojo.Comment_index;
 import com.hd.pojo.Product;
 
 @Controller
@@ -55,6 +56,12 @@ public class BusinessDisplayController {
 		if(count != null) tcount=count;
 		if(page != null) tpage=page;
 		return mapper.getCommentByBusId(id, tcount, (tpage-1)*tcount);
+	}
+	
+	@RequestMapping("/getBusinessPoint")
+	@ResponseBody
+	public Comment_index getBusinessPoint(int id) {
+		return mapper.getBusinessPoint(id);
 	}
 	
 }

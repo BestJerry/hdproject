@@ -24,4 +24,8 @@
 				 where b_id=#{arg0} limit #{arg2},#{arg1}
 		</select>
 		
+		<select id="getBusinessPoint" resultType="Comment_index">
+			select comment_count,point from comment_index where b_id = #{id}
+		</select>
+		
 	</mapper>
