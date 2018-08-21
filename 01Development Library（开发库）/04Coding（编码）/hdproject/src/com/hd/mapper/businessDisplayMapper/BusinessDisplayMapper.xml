@@ -7,7 +7,7 @@
 	
 		<select id="getBusinessByType" resultType="Business">
 			select id,b_name,type,address,b_telephone,postcode,c_name,c_gender,
-	        c_position,c_telephone,c_cellphone,c_fax from business where status='启用' and type=#{arg0} limit #{arg2},#{arg1}
+	        c_position,c_telephone,c_cellphone,c_fax from business join comment_index on business.id = comment_index.b_id where status='启用' and type=#{arg0} order by point desc limit #{arg2},#{arg1}
 		</select>
 		
 		<select id="getProductByBusId" resultType="Product">
@@ -16,7 +16,7 @@
 		
 		<select id="searchBusinessByKey" resultType="Business">
 			select id,b_name,type,address,b_telephone,postcode,c_name,c_gender,
-	        c_position,c_telephone,c_cellphone,c_fax from business where status='启用' and b_name like "%"#{arg0}"%" limit #{arg2},#{arg1}
+	        c_position,c_telephone,c_cellphone,c_fax from business join comment_index on business.id = comment_index.b_id where status='启用' and b_name like "%"#{arg0}"%" order by point desc limit #{arg2},#{arg1}
 		</select>
 		
 		<select id="getCommentByBusId" resultType="Comment">
@@ -25,7 +25,7 @@
 		</select>
 		
 		<select id="getBusinessPoint" resultType="Comment_index">
-			select comment_count,point from comment_index where b_id = #{id}
+			select B_id,comment_count,point from comment_index where b_id = #{id}
 		</select>
 		
 	</mapper>
