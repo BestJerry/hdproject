@@ -11,25 +11,35 @@
      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
      http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
-	
 	<!-- 配置@Autowired等注解 -->
+	
    <context:annotation-config />
  	
  	<!-- 配置数据库源  -->
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">  
 	  <property name="driverClassName">  
-	      <value>com.mysql.jdbc.Driver</value>  
+	      <value>${driver}</value>  
 	  </property>  
 	  <property name="url">
-	      <value>jdbc:mysql://localhost:3306/hdproject?characterEncoding=UTF-8</value>  
+	      <value>${url}</value>  
 	  </property>  
 	  <property name="username">  
-	      <value>root</value>
+	      <value>${username}</value>
 	  </property>  
 	  <property name="password">  
-	      <value>1218</value>  
+	      <value>${password}</value>  
 	  </property>  	
 	</bean>
+	
+	
+	<bean class="com.hd.general.EncryptPropertyPlaceholderConfigurer">
+    <property name="locations">
+      <list>
+        <value>classpath:jdbc.properties</value>
+      </list>
+    </property>
+    <property name="fileEncoding" value="UTF-8" />
+  </bean>
 	
 	<!-- 为数据源配置事务管理器 -->
     <bean id="transactionManager"
