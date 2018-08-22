@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<constant name="struts.devMode" value="true" />
+	<constant name="struts.objectFactory" value="spring" />
+	<package name="default" extends="struts-default">
+		<!-- 新闻类 -->
+		<action name="createNew" class="newsAction" method="add">
+			<result>/mycenter.jsp</result>
+		</action>
+		<action name="findNewById" class="newsAction" method="findById">
+			<result>/displayNew.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+		<action name="findNewByTitle" class="newsAction" method="findByTitle">
+			<result>/displayNew.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+		<action name="findAllNew" class="newsAction" method="findAll">
+			<result>/mycenter.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+		<action name="findByPassflag" class="newsAction" method="findByPassflag">
+			<result>/allNews.jsp</result>
+			<result name="error">/index.jsp</result>
+		</action>
+		<!-- 用户类 -->
+		<!-- 注册 -->
+		<action name="usersAction" class="usersAction" method="add">
+			<result>/login.jsp</result>
+			<result name="error">/register.jsp</result>
+		</action>
+		<!-- login -->
+		<action name="usersLogin" class="usersAction" method="login">
+			<result type="redirect">findAllNew.action</result>
+			<result name="error">/login.jsp</result>
+		</action>
+		<!-- usercheck -->
+		<action name="userscheckAction" class="userscheckAction"
+			method="add">
+			<result name="success">/userschecksuccess.jsp</result>
+			<result name="error">/userscheckerror.jsp</result>
+		</action>
+	</package>
+
+</struts>    
